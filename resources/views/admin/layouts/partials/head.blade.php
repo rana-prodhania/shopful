@@ -33,6 +33,7 @@
     {{-- <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/apex-charts/apex-charts.css') }}" /> --}}
 
     <!-- Page CSS -->
+    @stack('page_css')
 
     <!-- Helpers -->
     <script src="{{ asset('backend/assets/vendor/js/helpers.js') }}"></script>

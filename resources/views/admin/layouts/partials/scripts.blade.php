@@ -14,3 +14,5 @@
 
 <!-- Page JS -->
 {{-- <script src="{{ asset('backend/assets/js/dashboards-analytics.js') }}"></script> --}}
+
+@stack('page_js')
