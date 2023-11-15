@@ -27,6 +27,12 @@
        <div data-i18n="Analytics">Categories</div>
      </a>
    </li>
+   <li class="menu-item {{ Request::is('admin/sub-category*') ? 'active' : '' }}">
+     <a href="{{ route('admin.sub-category.index') }}" class="menu-link">
+      <i class="menu-icon tf-icons bx bx-category-alt"></i>
+       <div data-i18n="Analytics">Sub Categories</div>
+     </a>
+   </li>
 
    {{-- <li class="menu-item">
      <a href="javascript:void(0);" class="menu-link menu-toggle">
