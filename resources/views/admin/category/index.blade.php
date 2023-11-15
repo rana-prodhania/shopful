@@ -34,7 +34,6 @@
                                         <td>{{ $category->slug }}</td>
                                         <td class="text-center">
                                             <a class="btn btn-sm btn-outline-primary"
-                                                onclick="destroyCategory({{ $category->id }})"
                                                 href="{{ route('admin.category.edit', $category->id) }}">
                                                 <i class="fs-5 bx bx-edit"></i>
                                             </a>
