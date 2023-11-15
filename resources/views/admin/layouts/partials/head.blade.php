@@ -34,6 +34,7 @@
 
     <!-- Page CSS -->
     @stack('page_css')
+    
 
     <!-- Helpers -->
     <script src="{{ asset('backend/assets/vendor/js/helpers.js') }}"></script>

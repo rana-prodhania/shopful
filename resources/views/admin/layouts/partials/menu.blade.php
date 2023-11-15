@@ -29,8 +29,14 @@
    </li>
    <li class="menu-item {{ Request::is('admin/sub-category*') ? 'active' : '' }}">
      <a href="{{ route('admin.sub-category.index') }}" class="menu-link">
-      <i class="menu-icon tf-icons bx bx-category-alt"></i>
+      <i class="menu-icon tf-icons bx bx-customize"></i>
        <div data-i18n="Analytics">Sub Categories</div>
+     </a>
+   </li>
+   <li class="menu-item {{ Request::is('admin/brand*') ? 'active' : '' }}">
+     <a href="{{ route('admin.brand.index') }}" class="menu-link">
+      <i class="menu-icon fs-4 tf-icons bx bx-award"></i>
+       <div data-i18n="Analytics">Brands</div>
      </a>
    </li>
 

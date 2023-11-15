@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
 
@@ -38,6 +39,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(funct
     Route::get('/dashboard',[AdminController::class,'index'])->name('dashboard');
     Route::resource('/category',CategoryController::class);
     Route::resource('/sub-category',SubCategoryController::class);
+    Route::resource('/brand',BrandController::class);
 });
 
 

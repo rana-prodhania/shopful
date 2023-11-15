@@ -37,7 +37,7 @@
                  <label for="name" class="form-label">Sub Category Name</label>
                </div>
                <div class="col-sm-10">
-                 <input type="text" value="{{ $subCategory->name??old('name') }}" class="form-control"placeholder="Enter Category Name"
+                 <input type="text" value="{{ $subCategory->name??old('name') }}" class="form-control"placeholder="Enter Sub Category Name"
                    name="name" id="name" />
                  @error('name')
                  <span class="text-danger">{{ $message }}</span>
