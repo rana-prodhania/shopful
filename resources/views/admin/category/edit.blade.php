@@ -10,7 +10,7 @@
            <a href="{{ route('admin.category.index') }}" class="btn btn-sm btn-outline-danger">Back</a>
          </div>
          <div class="card-body">
-           <form action="{{ route('admin.category.update', $category->id) }}" method="POST">
+           <form action="{{ route('admin.category.update', $category->id) }}" method="POST" enctype="multipart/form-data">
              @csrf
              @method('PUT')
              <div class="row mb-3">
@@ -25,6 +25,18 @@
                  @enderror
                </div>
              </div>
+             <div class="row mb-3">
+              <div class="col-sm-2">
+                <label for="name" class="form-label">Category Image</label>
+              </div>
+              <div class="col-sm-10 w-25">
+                <input type="file" data-default-file="{{ asset($category->image)??old('image') }}"  class="form-control dropify"placeholder="Enter Category Name"  data-allowed-file-extensions="jpg jpeg png webp" data-max-file-size="1M"
+                  name="image" id="image" />
+                @error('image')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+            </div>
 
              <div class="row justify-content-end">
                <div class="col-sm-10">
@@ -41,3 +53,12 @@
  </div>
 </div>
 @endsection
+@push('page_css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" />
+@endpush
+@push('page_js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+<script>
+  $('.dropify').dropify();
+</script>
+@endpush

@@ -21,8 +21,8 @@
                             <thead>
                                 <tr>
                                     <th>S/N</th>
-                                    <th>Category Name</th>
-                                    <th>Category slug</th>
+                                    <th>Name</th>
+                                    <th class="text-center">Image</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -31,7 +31,7 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $category->name }}</td>
-                                        <td>{{ $category->slug }}</td>
+                                        <td class="text-center"><img src="{{ asset($category->image) }}" alt="no image" srcset=""></td>
                                         <td class="text-center">
                                             <a class="btn btn-sm btn-outline-primary"
                                                 href="{{ route('admin.category.edit', $category->id) }}">

@@ -6,6 +6,8 @@ use App\Models\category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
@@ -16,7 +18,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('admin.category.index',compact('categories'));
+        return view('admin.category.index', compact('categories'));
     }
 
     /**
@@ -35,8 +37,19 @@ class CategoryController extends Controller
         $category = new Category();
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
+
+        // image upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $imagePath = 'uploads/category/' . $imageName;
+            Image::make($image)->resize(64, 64)->save(public_path($imagePath));
+            $category->image = $imagePath;
+        }
+
         $category->save();
         toastr()->addSuccess('Category created successfully');
+
         return to_route('admin.category.index');
     }
 
@@ -54,18 +67,35 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         $category = Category::find($id);
-        return view('admin.category.edit',compact('category'));
+        return view('admin.category.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CategoryRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
-        
-        $category = Category::find($id);
+
+        $category = Category::findOrFail($id);
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
+        if ($request->hasFile('image')) {
+            $oldImagePath = public_path( $category->image);
+
+            // Delete old image if it exists
+            if (File::exists($oldImagePath)) {
+                File::delete($oldImagePath);
+            }
+
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $imagePath = 'uploads/category/' . $imageName;
+
+            // Resize and save the new image
+            Image::make($image)->resize(64, 64)->save(public_path($imagePath));
+
+            $category->image = $imagePath;
+        }
         $category->save();
         toastr()->addSuccess('Category updated successfully');
         return to_route('admin.category.index');
@@ -76,9 +106,14 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
+        $imagePath = public_path($category->image);
+        if (file_exists($imagePath)) {
+            File::delete($imagePath); 
+        }
         $category->delete();
         toastr()->addSuccess('Category deleted successfully');
         return to_route('admin.category.index');
     }
+    
 }
