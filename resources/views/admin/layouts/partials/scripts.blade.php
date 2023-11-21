@@ -7,7 +7,7 @@
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="{{ asset('backend/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+{{-- <script src="{{ asset('backend/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script> --}}
 
 <!-- Main JS -->
 <script src="{{ asset('backend/assets/js/main.js') }}"></script>

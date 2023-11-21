@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
@@ -34,13 +34,21 @@ require __DIR__.'/auth.php';
 | Admin Routes
 |--------------------------------------------------------------------------
 */
+Route::get('/admin/login',[AdminController::class,'login'])->name('admin.login');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/dashboard',[AdminController::class,'index'])->name('dashboard');
+    Route::get('/profile',[AdminController::class,'profile'])->name('profile');
+    Route::post('/profile',[AdminController::class,'update'])->name('profile.update');
+    Route::get('/security',[AdminController::class,'security'])->name('security');
+    Route::post('/security',[AdminController::class,'securityUpdate'])->name('security.update');
+    Route::get('/logout',[AdminController::class,'logout'])->name('logout');
     Route::resource('/category',CategoryController::class);
     Route::resource('/sub-category',SubCategoryController::class);
     Route::resource('/brand',BrandController::class);
 });
+
+
 
 
 
