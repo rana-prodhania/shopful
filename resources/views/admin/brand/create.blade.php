@@ -5,11 +5,11 @@
    <div class="row mb-4 justify-content-center">
      <div class="col-xxl">
        <div class="card mb-4">
-         <div class="card-header d-flex align-items-center justify-content-between">
+         <div class="card-header border-bottom d-flex align-items-center justify-content-between">
            <h5 class="mb-0">Add Brand</h5>
            <a href="{{ route('admin.brand.index') }}" class="btn btn-sm btn-outline-danger">Back</a>
          </div>
-         <div class="card-body">
+         <div class="card-body mt-4">
            <form action="{{ route('admin.brand.store') }}" method="POST">
              @csrf
              <div class="row mb-3">

@@ -86,4 +86,11 @@ class SubCategoryController extends Controller
         toastr()->addSuccess('Sub Category deleted successfully');
         return to_route('admin.sub-category.index');
     }
+
+    // Get SubCategory
+    public function getSubCategory($category_id)
+    {
+        $subCategory = SubCategory::where('category_id', $category_id)->get();
+        return $subCategory;
+    }
 }

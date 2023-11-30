@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
 
@@ -44,8 +45,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(funct
     Route::post('/security',[AdminController::class,'securityUpdate'])->name('security.update');
     Route::get('/logout',[AdminController::class,'logout'])->name('logout');
     Route::resource('/category',CategoryController::class);
+    Route::get('/subcategory/ajax/{category_id}', [SubCategoryController::class, 'getSubCategory'])->name('subcategory.ajax');
     Route::resource('/sub-category',SubCategoryController::class);
     Route::resource('/brand',BrandController::class);
+    
+    Route::resource('/product',ProductController::class);
 });
 
 

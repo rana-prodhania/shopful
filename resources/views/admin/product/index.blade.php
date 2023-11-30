@@ -1,4 +1,5 @@
 @extends('admin.layouts.app')
+@section('title', 'Products')
 @section('content')
   <div class="content-wrapper">
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -8,42 +9,52 @@
             <div class="card-header px-0 m-0 d-flex justify-content-between">
               <div class="head-label">
                 <h5 class="card-title mb-0 text-uppercase">
-                  List of Categories
+                  List of Products
                 </h5>
               </div>
               <div>
-                <a href="{{ route('admin.category.create') }}"><button type="button" class="btn btn-primary">
-                    Add Category
+                <a href="{{ route('admin.product.create') }}"><button type="button" class="btn btn-primary">
+                    Add Product
                   </button></a>
               </div>
             </div>
-            <table  id="example" class="table table-striped" style="width: 100%">
+            <table id="example" class="table table-striped" style="width: 100%">
               <thead>
                 <tr>
                   <th>S/N</th>
                   <th>Name</th>
-                  <th class="text-center">Image</th>
+                  <th class="text-center" width="15%">Image</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Dicount</th>
+                  <th>Status</th>
                   <th class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach ($categories as $index => $category)
+                @foreach ($products as $index => $prodcut)
                   <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $category->name }}</td>
-                    <td class="text-center"><img src="{{ asset($category->image) }}" alt="no image" srcset=""></td>
+                    <td>{{ $prodcut->name }}</td>
+                    <td class="text-center"><img src="{{ asset($prodcut->thumbnail) }}" alt="no image" class="img-fluid "  srcset=""></td>
+                    <td>{{ $prodcut->price }} TK</td>
+                    <td>{{ $prodcut->quantity }}</td>
+                    <td>{{ $prodcut->discount_price }} TK</td>
+                    <td>
+                      <span class="badge rounded-pill bg-success">{{ $prodcut->status=='active' ? 'Active' : 'Inactive' }}</span>
+                    </td>
                     <td class="text-center">
-                      <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.category.edit', $category->id) }}">
+                      <a class="btn btn-sm btn-outline-primary" href="">
                         <i class="fs-5 bx bx-edit"></i>
                       </a>
 
-                      <a onclick="destroyCategory({{ $category->id }})" href="javascript:void(0)"
+                      <a onclick="destroy()" href="javascript:void(0)"
                         class="btn btn-sm btn-outline-danger">
                         <i class="fs-5 bx bx-trash"></i>
                       </a>
 
-                      <form id="delete-form-{{ $category->id }}"
-                        action="{{ route('admin.category.destroy', $category->id) }}" method="POST"
+                      <form id="delete-form-"
+                        action="" method="POST"
                         style="display: none;">
                         @csrf
                         @method('DELETE')
@@ -68,14 +79,14 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
 @push('page_js')
   <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/r-2.5.0/datatables.min.js"></script>
   <script src="
-              https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js
-              "></script>
+                https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js
+                "></script>
   <script>
     $('#example').DataTable({
       responsive: true
     });
 
-    function destroyCategory(id) {
+    function destroy(id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",

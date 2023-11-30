@@ -5,16 +5,17 @@
    <div class="row mb-4 justify-content-center">
      <div class="col-xxl">
        <div class="card mb-4">
-         <div class="card-header d-flex align-items-center justify-content-between">
+         <div class="card-header border-bottom d-flex align-items-center justify-content-between">
            <h5 class="mb-0">Add Category</h5>
            <a href="{{ route('admin.category.index') }}" class="btn btn-sm btn-outline-danger">Back</a>
          </div>
-         <div class="card-body">
+         <div class="card-body mt-4">
            <form action="{{ route('admin.category.store') }}" method="POST" enctype="multipart/form-data">
              @csrf
              <div class="row mb-3">
                <div class="col-sm-2">
-                 <label for="name" class="form-label">Category Name</label>
+                 <label for="name" class="form-label">Category Name <span
+                  class="text-danger">*</span></label>
                </div>
                <div class="col-sm-10">
                  <input type="text" value="{{ old('name') }}" class="form-control"placeholder="Enter Category Name"

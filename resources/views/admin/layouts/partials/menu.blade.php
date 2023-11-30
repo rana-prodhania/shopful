@@ -39,6 +39,12 @@
        <div data-i18n="Analytics">Brands</div>
      </a>
    </li>
+   <li class="menu-item {{ Request::is('admin/product*') ? 'active' : '' }}">
+     <a href="{{ route('admin.product.index') }}" class="menu-link">
+      <i class="menu-icon fs-4 tf-icons bx bx-package"></i>
+       <div data-i18n="Analytics">Products</div>
+     </a>
+   </li>
 
    {{-- <li class="menu-item">
      <a href="javascript:void(0);" class="menu-link menu-toggle">
