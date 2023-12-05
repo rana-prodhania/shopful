@@ -23,12 +23,14 @@ return new class extends Migration
             $table->string('short_desc');
             $table->text('long_desc');
             $table->integer('price');
-            $table->integer('discount_price');
+            $table->integer('discount_price')->nullable();
             $table->integer('quantity')->default(0);
             $table->string('color')->nullable();
-            $table->enum('featured', ['yes', 'no']);
-            $table->enum('in_stock', ['yes', 'no']);
-            $table->enum('status',['active', 'inactive']);
+            // $table->enum('featured', ['yes', 'no']);
+            $table->boolean('featured')->default(false);
+            // $table->enum('in_stock', ['yes', 'no']);
+            $table->boolean('in_stock')->default(false);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

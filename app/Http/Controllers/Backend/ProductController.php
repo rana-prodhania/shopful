@@ -48,12 +48,13 @@ class ProductController extends Controller
         $product->long_desc = $request->long_desc;
         $product->price = $request->price;
         $product->discount_price = $request->discount_price;
-        $product->in_stock = $request->has('in_stock') ? 'yes' : 'no';
+        $product->in_stock = $request->has('in_stock') ? true : false;
         $product->category_id = $request->category_id;
         $product->subcategory_id = $request->subcategory_id;
         $product->brand_id = $request->brand_id;
+        $product->color = $request->color;
         $product->status = $request->status;
-        $product->featured = $request->has('featured') ? 'yes' : 'no';
+        $product->featured = $request->has('featured') ? true : false;
         // image upload
         if ($request->hasFile('thumbnail')) {
             $image = $request->file('thumbnail');

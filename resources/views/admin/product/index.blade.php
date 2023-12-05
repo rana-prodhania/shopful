@@ -28,7 +28,7 @@
                   <th>Quantity</th>
                   <th>Dicount</th>
                   <th>Status</th>
-                  <th class="text-center">Actions</th>
+                  <th class="text-center" width="30%">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -36,26 +36,49 @@
                   <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $prodcut->name }}</td>
-                    <td class="text-center"><img src="{{ asset($prodcut->thumbnail) }}" alt="no image" class="img-fluid "  srcset=""></td>
+                    <td class="text-center"><img src="{{ asset($prodcut->thumbnail) }}" alt="no image" class="img-fluid "
+                        srcset=""></td>
                     <td>{{ $prodcut->price }} TK</td>
                     <td>{{ $prodcut->quantity }}</td>
-                    <td>{{ $prodcut->discount_price }} TK</td>
                     <td>
-                      <span class="badge rounded-pill bg-success">{{ $prodcut->status=='active' ? 'Active' : 'Inactive' }}</span>
+                      @php
+                        $originalPrice = $prodcut->price;
+                        $discountedPrice = $prodcut->discount_price;
+                        $discountPercentage = (($originalPrice - $discountedPrice) / $originalPrice) * 100;
+                      @endphp
+                      <span class="badge rounded-pill bg-warning">
+                        {{ round($discountPercentage) }}
+                        %
+                      </span>
+                    </td>
+                    <td>
+                      <span
+                        class="badge rounded-pill bg-success">{{ $prodcut->status === 1 ? 'Active' : 'Inactive' }}</span>
                     </td>
                     <td class="text-center">
+                      <a class="btn btn-sm btn-outline-primary" href="">
+                        <i class="fs-5 bx bx-show"></i>
+                      </a>
+                      @if ($prodcut->status === 1)
+                      <a class="btn btn-sm btn-outline-primary" href="">
+                        <i class="fs-5 bx bx-up-arrow-alt"></i>
+                      </a>
+
+                      @else
+                      <a class="btn btn-sm btn-outline-primary" href="">
+                        <i class="fs-5 bx bx-down-arrow-alt"></i>
+                      </a>
+                        
+                      @endif
                       <a class="btn btn-sm btn-outline-primary" href="">
                         <i class="fs-5 bx bx-edit"></i>
                       </a>
 
-                      <a onclick="destroy()" href="javascript:void(0)"
-                        class="btn btn-sm btn-outline-danger">
+                      <a onclick="destroy()" href="javascript:void(0)" class="btn btn-sm btn-outline-danger">
                         <i class="fs-5 bx bx-trash"></i>
                       </a>
 
-                      <form id="delete-form-"
-                        action="" method="POST"
-                        style="display: none;">
+                      <form id="delete-form-" action="" method="POST" style="display: none;">
                         @csrf
                         @method('DELETE')
                       </form>
@@ -72,15 +95,11 @@
 @endsection
 @push('page_css')
   <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/r-2.5.0/datatables.min.css" rel="stylesheet">
-  <link href="
-https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css
-" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css" rel="stylesheet">
 @endpush
 @push('page_js')
   <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/r-2.5.0/datatables.min.js"></script>
-  <script src="
-                https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js
-                "></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
   <script>
     $('#example').DataTable({
       responsive: true
