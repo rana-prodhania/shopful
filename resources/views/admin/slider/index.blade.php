@@ -23,6 +23,8 @@
                   <th>S/N</th>
                   <th>Title</th>
                   <th class="text-center" width="13%">Image</th>
+                  <th>Url</th>
+                  <th width="10%">Status</th>
                   <th class="text-center">Actions</th>
                 </tr>
               </thead>
@@ -32,6 +34,15 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $slider->title }}</td>
                     <td class="text-center"><img src="{{ asset($slider->image) }}" class="img-fluid" alt="no image" srcset=""></td>
+                    <td>{{ $slider->url }}</td>
+                    <td>
+                      @if ($slider->status == 1)
+                        <span class="badge rounded-pill bg-success">Active</span>
+                      @else
+                        <span class="badge rounded-pill bg-danger">Inactive</span>
+                        
+                      @endif
+                    </td>
                     <td class="text-center">
                       <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.slider.edit', $slider->id) }}">
                         <i class="fs-5 bx bx-edit"></i>

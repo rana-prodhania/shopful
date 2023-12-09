@@ -49,7 +49,22 @@
                     @enderror
                   </div>
                 </div>
-                
+                <div class="mb-3 row ecommerce-select2-dropdown">
+                  <div class="col-sm-2">
+                    <label class="form-label mb-1 d-flex justify-content-between align-items-center" for="category-org">
+                      <span>Product Status <span class="text-warning">(default: Active)</span></span>
+                    </label>
+                  </div>
+                  <div class="col-sm-10">
+                    <select id="status-org" name="status" class="select2 form-select" data-placeholder="Status">
+                      <option value="1">Active</option>
+                      <option value="0">Inactive</option>
+                    </select>
+                    @error('status')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  </div>
+                </div>
                 <div class="row justify-content-end">
                   <div class="col-sm-10">
                     <button type="submit" name="submit" class="btn btn-primary">
@@ -67,10 +82,15 @@
 @endsection
 @push('page_css')
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" />
+  <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/select2/select2.css') }}">
 @endpush
 @push('page_js')
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+  <script src="{{ asset('backend/assets/vendor/libs/select2/select2.js') }}"></script>
   <script>
-    $('.dropify').dropify();
+    $(document).ready(function() {
+      $('.dropify').dropify();
+    $('.select2').select2();
+    })
   </script>
 @endpush

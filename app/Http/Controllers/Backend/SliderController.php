@@ -35,6 +35,7 @@ class SliderController extends Controller
         $slider = new Slider();
         $slider->title = $request->title;
         $slider->url = $request->url;
+        $slider->status = $request->status;
         // Image upload
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -80,6 +81,7 @@ class SliderController extends Controller
         $slider = Slider::find($id);
         $slider->title = $request->title;
         $slider->url = $request->url;
+        $slider->status = $request->status;
         // Image upload
         if ($request->hasFile('image')) {
             unlink(public_path($slider->image));
