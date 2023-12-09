@@ -32,7 +32,7 @@ $(document).ready(function() {
         subcategory_id: {
           required: true,
         },
-        brand: {
+        brand_id: {
           required: true,
         }
       },
@@ -67,7 +67,7 @@ $(document).ready(function() {
         subcategory_id: {
           required: 'Please select a product subcategory',
         },
-        brand: {
+        brand_id: {
           required: 'Please select a product brand',
         }
       },

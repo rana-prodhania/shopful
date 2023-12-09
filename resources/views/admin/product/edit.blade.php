@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Add Product')
+@section('title', 'Edit Product')
 @section('content')
   <div class="content-wrapper">
     <!-- Content -->
@@ -7,12 +7,14 @@
       <div class="app-ecommerce">
         <div class="card mb-4">
           <div class="card-header border-bottom d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">Add Product</h5>
+            <h5 class="mb-0">Edit Product</h5>
             <a href="{{ route('admin.product.index') }}" class="btn btn-sm btn-outline-danger">Back</a>
           </div>
 
-          <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data" id="myForm">
+          <form action="{{ route('admin.product.update', $product->id) }}" enctype="multipart/form-data" method="POST"
+            id="myForm">
             @csrf
+            @method('PUT')
             <div class="row mt-0">
               <!-- First column-->
               <div class="col-12 col-lg-8">
@@ -24,7 +26,7 @@
                       <label class="form-label" for="name">Name <span class="text-danger">*</span>
                       </label>
                       <input type="text" class="form-control" id="name" placeholder="Product name" name="name"
-                        aria-label="Product title">
+                        aria-label="Product title" value="{{ $product->name }}">
                       @error('name')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
@@ -37,7 +39,7 @@
                           <span class="text-danger">*</span>
                         </label>
                         <input type="number" class="form-control" id="code" placeholder="Product Code"
-                          name="code" aria-label="Product SKU">
+                          name="code" aria-label="Product SKU" value="{{ $product->code }}">
                         @error('code')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -48,7 +50,7 @@
                           <span class="text-danger">*</span>
                         </label>
                         <input type="number" class="form-control" id="quantity" placeholder="Product Quantity"
-                          name="quantity" aria-label="Product SKU">
+                          name="quantity" aria-label="Product SKU" value="{{ $product->quantity }}">
                         @error('quantity')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -58,25 +60,28 @@
                     <div class="row mb-3">
                       <div class="col form-group"><label class="form-label" for="thumbnail">Thubmnail <span
                             class="text-danger">*</span></label>
-                        <input data-height="300" data-max-file-size="1M" data-allowed-file-extensions="jpg jpeg png webp"
-                          class="form-control dropify" name="thumbnail" type="file" id="thumbnail" />
+                        <input data-height="300" data-default-file="{{ asset($product->thumbnail) }}"
+                          data-max-file-size="1M" data-allowed-file-extensions="jpg jpeg png webp"
+                          class="form-control dropify" name="thumbnail" type="file" id="thumbnail"/>
                         @error('thumbnail')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
                       </div>
                     </div>
-
                     {{-- Product Images --}}
                     <div class="row mb-3">
                       <div class="col form-group">
                         <label class="form-label" for="images">Images
                           <span class="text-danger">*</span>
                         </label>
-                        <input class="form-control" type="file" name="images[]" id="images" multiple required>
+                        <input class="form-control" type="file" name="images[]" id="images" multiple>
                         @error('images')
                           <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <div class="row mt-3" id="preview_img"></div>
+                        @foreach ($product->productImages as $image)
+                          <img class="img-fluid" width="100" src="{{ asset($image->image) }}" >
+                        @endforeach
                       </div>
                     </div>
 
@@ -85,7 +90,7 @@
                     <div class="mb-3 form-group">
                       <label class="form-label" for="ecommerce-product-sku">Short Description <span
                           class="text-danger">*</span></label>
-                      <textarea class="form-control" name="short_desc" cols="30" rows="2"></textarea>
+                      <textarea class="form-control" name="short_desc" cols="30" rows="2">{{ $product->short_desc }}</textarea>
                       @error('short_desc')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
@@ -94,7 +99,7 @@
                     <div class="form-group">
                       <label class="form-label" for="ecommerce-product-sku">Long Description <span
                           class="text-danger">*</span></label>
-                      <textarea name="long_desc" id="description" cols="30" rows="10"></textarea>
+                      <textarea name="long_desc" id="description" cols="30" rows="10">{{ $product->long_desc }}</textarea>
                       @error('long_desc')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
@@ -118,7 +123,7 @@
                     <div class="mb-3 form-group">
                       <label class="form-label" for="price">Base Price <span class="text-danger">*</span></label>
                       <input type="number" class="form-control" id="price" placeholder="Price" name="price"
-                        aria-label="Product price">
+                        aria-label="Product price" value="{{ $product->price }}">
                       @error('price')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
@@ -127,14 +132,16 @@
                     <div class="mb-3">
                       <label class="form-label" for="ecommerce-product-discount-price">Discounted Price </label>
                       <input type="number" class="form-control" id="ecommerce-product-discount-price"
-                        placeholder="Discounted Price" name="discount_price" aria-label="Product discounted price">
+                        placeholder="Discounted Price" name="discount_price" aria-label="Product discounted price"
+                        value="{{ $product->discount_price }}">
                       @error('discountPrice')
                         <span class="text-danger">{{ $message }}</span>
                       @enderror
                     </div>
                     <!-- Instock switch -->
                     <div class="d-flex  pt-3 form-check form-switch mb-2">
-                      <input class="form-check-input" name="in_stock" type="checkbox" id="flexSwitchCheckDefault">
+                      <input @if ($product->in_stock == 1) checked @endif class="form-check-input" name="in_stock"
+                        type="checkbox" id="flexSwitchCheckDefault">
                       <label class="form-check-label fw-bold ps-2" for="flexSwitchCheckDefault">In Stock</label>
                       @error('in_stock')
                         <span class="text-danger">{{ $message }}</span>
@@ -158,7 +165,8 @@
                         data-placeholder="Select Category">
                         <option value="">Select Category</option>
                         @foreach ($categories as $category)
-                          <option value="{{ $category->id }}">{{ $category->name }}</option>
+                          <option {{ $product->category_id == $category->id ? 'selected' : '' }}
+                            value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                         @error('category_id')
                           <span class="text-danger">{{ $message }}</span>
@@ -184,7 +192,8 @@
                       <select id="brand" name="brand_id" class="select2 form-select" data-placeholder="Brand">
                         <option value="">Brand</option>
                         @foreach ($brands as $brand)
-                          <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                          <option {{ $brand->id == $product->brand_id ? 'selected' : '' }} value="{{ $brand->id }}">
+                            {{ $brand->name }}</option>
                         @endforeach
                         @error('brand_id')
                           <span class="text-danger">{{ $message }}</span>
@@ -195,23 +204,23 @@
                     <!-- Color -->
                     <div class="mb-3">
                       <label for="color" class="form-label mb-1">Colors</label>
-                      <input id="color" class="form-control" name="color" value=""
+                      <input id="color" class="form-control" name="color" value="{{ $product->color }}"
                         aria-label="Product color" placeholder="Color" />
                     </div>
 
                     <!-- Status -->
                     <div class="mb-3 col ecommerce-select2-dropdown">
                       <label class="form-label mb-1" for="status-org">Status
-                        <span class="text-warning">(default: Active)</span>
                       </label>
                       <select id="status-org" name="status" class="select2 form-select" data-placeholder="Status">
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                        <option {{ $product->status == 1 ? 'selected' : '' }} value="1">Active</option>
+                        <option {{ $product->status == 0 ? 'selected' : '' }} value="0">Inactive</option>
                       </select>
                     </div>
                     {{-- <!-- Featured --> --}}
                     <div class="form-check form-switch mb-2">
-                      <input class="form-check-input" name="featured" type="checkbox" id="flexSwitchCheckChecked">
+                      <input @if ($product->featured == 1) checked @endif class="form-check-input" name="featured"
+                        type="checkbox" id="flexSwitchCheckChecked">
                       <label class="form-check-label fw-bold" for="flexSwitchCheckChecked">Featured</label>
                     </div>
                   </div>
@@ -223,7 +232,7 @@
             <div class="row mb-4 ms-2">
               <div class="col-sm-12">
                 <button type="submit" name="submit" class="btn btn-primary">
-                  Submit
+                  Update
                 </button>
               </div>
             </div>
@@ -238,17 +247,14 @@
   <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/select2/select2.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" />
   <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/tagify/tagify.css') }}" />
-  <link rel="stylesheet" href="{{ asset('backend/assets/vendor/libs/dropzone/dropzone.css') }}" />
 @endpush
 @push('page_js')
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
   <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
   <script src="{{ asset('backend/assets/vendor/libs/select2/select2.js') }}"></script>
-  <script src="{{ asset('backend/assets/vendor/libs/dropzone/dropzone.js') }}"></script>
-  <script src="{{ asset('backend/assets/js/forms-file-upload.js') }}"></script>
   {{-- Custom JS --}}
-  <script src="{{ asset('backend/assets/js/validation/product.js') }}"></script>
+  {{-- <script src="{{ asset('backend/assets/js/validation/product.js') }}"></script> --}}
   <script src="{{ asset('backend/assets/js/product.js') }}"></script>
   <script>
     function loadSubcategories(category_id) {
@@ -257,8 +263,9 @@
           success: function(data) {
             $("#sub-category").empty();
             $.each(data, function(key, value) {
+              const selected = (value.id == {{ $product->subcategory_id }}) ? 'selected' : '';
               $("#sub-category").append(
-                '<option  value="' +
+                '<option ' + selected + '  value="' +
                 value.id +
                 '">' +
                 value.name +

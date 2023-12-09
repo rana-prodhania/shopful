@@ -22,8 +22,8 @@
               <thead>
                 <tr>
                   <th>S/N</th>
-                  <th>Name</th>
-                  <th class="text-center" width="15%">Image</th>
+                  <th width="40%">Name</th>
+                  <th class="text-center" width="20%">Image</th>
                   <th>Price</th>
                   <th>Quantity</th>
                   <th>Dicount</th>
@@ -35,7 +35,7 @@
                 @foreach ($products as $index => $prodcut)
                   <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $prodcut->name }}</td>
+                    <td>{{ Str::limit($prodcut->name, 30) }}</td>
                     <td class="text-center"><img src="{{ asset($prodcut->thumbnail) }}" alt="no image" class="img-fluid "
                         srcset=""></td>
                     <td>{{ $prodcut->price }} TK</td>
@@ -46,39 +46,48 @@
                         $discountedPrice = $prodcut->discount_price;
                         $discountPercentage = (($originalPrice - $discountedPrice) / $originalPrice) * 100;
                       @endphp
-                      <span class="badge rounded-pill bg-warning">
-                        {{ round($discountPercentage) }}
-                        %
-                      </span>
+                      @if ($discountedPrice != null)
+                        <span class="badge rounded-pill bg-warning">
+                          {{ round($discountPercentage) }}
+                          %
+                        </span>
+                      @else
+                        <span class="badge rounded-pill bg-warning">
+                          0%
+                        </span>
+                      @endif
                     </td>
                     <td>
                       <span
-                        class="badge rounded-pill bg-success">{{ $prodcut->status === 1 ? 'Active' : 'Inactive' }}</span>
+                        class="badge rounded-pill bg-{{ $prodcut->status === 1 ? 'success' : 'danger' }}">{{ $prodcut->status === 1 ? 'Active' : 'Inactive' }}</span>
                     </td>
                     <td class="text-center">
-                      <a class="btn btn-sm btn-outline-primary" href="">
+                      <a class="btn btn-sm btn-outline-secondary" href="">
                         <i class="fs-5 bx bx-show"></i>
                       </a>
                       @if ($prodcut->status === 1)
-                      <a class="btn btn-sm btn-outline-primary" href="">
-                        <i class="fs-5 bx bx-up-arrow-alt"></i>
-                      </a>
-
+                        <a class="btn btn-sm btn-outline-success"
+                          href="{{ route('admin.product.status', $prodcut->id) }}">
+                          <i class="fs-5 bx bx-up-arrow-alt"></i>
+                        </a>
                       @else
-                      <a class="btn btn-sm btn-outline-primary" href="">
-                        <i class="fs-5 bx bx-down-arrow-alt"></i>
-                      </a>
-                        
+                        <a class="btn btn-sm btn-outline-danger"
+                          href="{{ route('admin.product.status', $prodcut->id) }}">
+                          <i class="fs-5 bx bx-down-arrow-alt"></i>
+                        </a>
                       @endif
-                      <a class="btn btn-sm btn-outline-primary" href="">
+                      <a class="btn btn-sm btn-outline-info mt-lg-1" href="{{ route('admin.product.edit', $prodcut->id) }}">
                         <i class="fs-5 bx bx-edit"></i>
                       </a>
 
-                      <a onclick="destroy()" href="javascript:void(0)" class="btn btn-sm btn-outline-danger">
+                      <a onclick="destroy({{ $prodcut->id }})" href="javascript:void(0)"
+                        class="btn btn-sm btn-outline-danger mt-lg-1">
                         <i class="fs-5 bx bx-trash"></i>
                       </a>
 
-                      <form id="delete-form-" action="" method="POST" style="display: none;">
+                      <form id="delete-form-{{ $prodcut->id }}"
+                        action="{{ route('admin.product.destroy', $prodcut->id) }}" method="POST"
+                        style="display: none;">
                         @csrf
                         @method('DELETE')
                       </form>

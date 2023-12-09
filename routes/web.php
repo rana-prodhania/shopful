@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\ProductController;
@@ -35,7 +36,7 @@ require __DIR__.'/auth.php';
 | Admin Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/admin/login',[AdminController::class,'login'])->name('admin.login');
+Route::get('/admin/login',[AdminController::class,'login'])->name('admin.login')->middleware('guest');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/dashboard',[AdminController::class,'index'])->name('dashboard');
@@ -48,7 +49,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(funct
     Route::get('/subcategory/ajax/{category_id}', [SubCategoryController::class, 'getSubCategory'])->name('subcategory.ajax');
     Route::resource('/sub-category',SubCategoryController::class);
     Route::resource('/brand',BrandController::class);
-    
+    // Route::get('/product/{product}/toggle-status',[ProductController::class,'toggleStatus'])->name('product.toggle-status');
+    Route::get('/product/status/{product}',[ProductController::class,'toggleStatus'])->name('product.status');
     Route::resource('/product',ProductController::class);
 });
 
