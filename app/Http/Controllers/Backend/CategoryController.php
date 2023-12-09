@@ -38,7 +38,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
 
-        // image upload
+        // Image upload
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();

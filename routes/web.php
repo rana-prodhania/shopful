@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
@@ -49,9 +50,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(funct
     Route::get('/subcategory/ajax/{category_id}', [SubCategoryController::class, 'getSubCategory'])->name('subcategory.ajax');
     Route::resource('/sub-category',SubCategoryController::class);
     Route::resource('/brand',BrandController::class);
-    // Route::get('/product/{product}/toggle-status',[ProductController::class,'toggleStatus'])->name('product.toggle-status');
     Route::get('/product/status/{product}',[ProductController::class,'toggleStatus'])->name('product.status');
     Route::resource('/product',ProductController::class);
+    Route::resource('/slider', SliderController::class);
 });
 
 

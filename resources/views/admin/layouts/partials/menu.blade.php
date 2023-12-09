@@ -45,6 +45,12 @@
        <div data-i18n="Analytics">Products</div>
      </a>
    </li>
+   <li class="menu-item {{ Request::is('admin/slider*') ? 'active' : '' }}">
+     <a href="{{ route('admin.slider.index') }}" class="menu-link">
+      <i class="menu-icon fs-4 tf-icons bx bx-slider-alt"></i>
+       <div data-i18n="Analytics">Sliders</div>
+     </a>
+   </li>
 
    {{-- <li class="menu-item">
      <a href="javascript:void(0);" class="menu-link menu-toggle">
