@@ -5,7 +5,7 @@
       <div class="row align-items-center">
         <div class="col-lg-2 col-sm-3 col-5">
           <div class="header-brand">
-            <a href="index.html" class="logo logo-dark">
+            <a href="{{ route('frontend.home') }}" class="logo logo-dark">
               <img src="{{ asset('frontend/assets/images/logo/logo.png') }}" alt="Site Logo">
             </a>
             <a href="index.html" class="logo logo-light">
@@ -200,18 +200,9 @@
                   <li>
                     <a href="my-account.html">My Account</a>
                   </li>
-                  <li>
-                    <a href="#">Initiate return</a>
-                  </li>
-                  <li>
-                    <a href="#">Support</a>
-                  </li>
-                  <li>
-                    <a href="#">Language</a>
-                  </li>
                 </ul>
-                <a href="sign-in.html" class="axil-btn btn-bg-primary">Login</a>
-                <div class="reg-footer text-center">No account yet? <a href="sign-up.html" class="btn-link">REGISTER
+                <a href="{{ route('login') }}" class="axil-btn btn-bg-primary">Login</a>
+                <div class="reg-footer text-center">No account yet? <a href="{{ route('register') }}" class="btn-link">REGISTER
                     HERE.</a></div>
               </div>
             </li>
