@@ -65,25 +65,26 @@
                 @php
                   $categories = \App\Models\Category::with('subCategories')->get();
                 @endphp
-                
-                  @forelse ($categories as $category)
+
+                @forelse ($categories as $category)
                   <li>
                     <a href="{{ route('frontend.category', $category->slug) }}" class="nav-link has-megamenu">
-                      <span class="menu-icon"><img src="{{ asset($category->image) }}"
-                          alt="Department"></span>
+                      <span class="menu-icon"><img src="{{ asset($category->image) }}" alt="Department"></span>
                       <span class="menu-text">{{ $category->name }}</span>
                     </a>
                     <div class="department-megamenu">
                       <div class="department-megamenu-wrap">
                         <div class="department-submenu-wrap">
                           <div class="department-submenu">
-                            
+
                             <h3 class="submenu-heading">{{ $category->name }}</h3>
                             <ul>
                               @forelse ($category->subCategories as $subcategory)
-                              <li><a href="{{ route('frontend.subcategory', $subcategory->slug) }}">{{ $subcategory->name }}</a></li>
+                                <li><a
+                                    href="{{ route('frontend.subcategory', $subcategory->slug) }}">{{ $subcategory->name }}</a>
+                                </li>
                               @empty
-                              <li><a href="shop.html">No Subcategory</a></li>
+                                <li><a href="shop.html">No Subcategory</a></li>
                               @endforelse
                             </ul>
                           </div>
@@ -91,11 +92,11 @@
                       </div>
                     </div>
                   </li>
-                  @empty
+                @empty
                   <li><a href="shop.html">No Category</a></li>
-                  @endforelse
+                @endforelse
 
-                
+
               </ul>
             </nav>
           </aside>
@@ -196,14 +197,20 @@
               </a>
               <div class="my-account-dropdown">
                 <span class="title">QUICKLINKS</span>
-                <ul>
-                  <li>
-                    <a href="my-account.html">My Account</a>
-                  </li>
-                </ul>
-                <a href="{{ route('login') }}" class="axil-btn btn-bg-primary">Login</a>
-                <div class="reg-footer text-center">No account yet? <a href="{{ route('register') }}" class="btn-link">REGISTER
-                    HERE.</a></div>
+
+                @if (auth()->user())
+                  <ul>
+                    <li>
+                      <a href="{{ route('dashboard') }}">My Account</a>
+                    </li>
+                  </ul>
+                @else
+                  <a href="{{ route('login') }}" class="axil-btn btn-bg-primary">Login</a>
+                  <div class="reg-footer text-center">No account yet? <a href="{{ route('register') }}"
+                      class="btn-link">REGISTER
+                      HERE.</a></div>
+                @endif
+
               </div>
             </li>
             <li class="axil-mobile-toggle">
