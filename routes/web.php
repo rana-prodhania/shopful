@@ -33,7 +33,8 @@ route::name('frontend.')->group(function () {
     route::get('/', [IndexController::class, 'index'])->name('home');
     route::get('/category/{slug}', [IndexController::class, 'category'])->name('category');
     route::get('/subcategory/{slug}', [IndexController::class, 'subcategory'])->name('subcategory');
-    route::get('/product/{slug}', [IndexController::class, 'product'])->name('product');
+    route::get('/product/{slug}', [IndexController::class, 'productDetail'])->name('product');
+    route::get('/product/view/{id}', [IndexController::class, 'productModal'])->name('product.modal');
 });
 /*
 |--------------------------------------------------------------------------

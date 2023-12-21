@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'Category')
+@section('title', $category->name)
 @section('content')
   <!-- Start Breadcrumb Area  -->
   <div class="axil-breadcrumb-area">
@@ -10,11 +10,11 @@
             <ul class="axil-breadcrumb">
               <li class="axil-breadcrumb-item"><a href="index.html">Home</a></li>
               <li class="separator"></li>
-              <li class="axil-breadcrumb-item" aria-current="page">Sub Category</li>
+              <li class="axil-breadcrumb-item" aria-current="page"> Category</li>
               <li class="separator"></li>
               <li class="axil-breadcrumb-item active" aria-current="page">{{ $category->name }}</li>
             </ul>
-            <h4>Explore All Products Of {{$category->name }}</h4>
+            <h4>Explore All Products Of {{ $category->name }}</h4>
           </div>
         </div>
       </div>
@@ -37,7 +37,8 @@
               <div class="shop-submenu">
                 <ul>
                   @forelse ($category->subCategories as $subCategory)
-                    <li><a href="{{ route('frontend.subcategory', $subCategory->slug) }}">{{ $subCategory->name }}</a></li>
+                    <li><a href="{{ route('frontend.subcategory', $subCategory->slug) }}">{{ $subCategory->name }}</a>
+                    </li>
                   @empty
                     <span>No Sub Category Found!</span>
                   @endforelse
@@ -91,7 +92,7 @@
               <div class="col-xl-4 col-sm-6">
                 <div class="axil-product product-style-one mb--30">
                   <div class="thumbnail">
-                    <a href="single-product.html">
+                    <a href="{{ route('frontend.product', $product->slug) }}">
                       <img src="{{ asset($product->thumbnail) }}" alt="Product Images">
                     </a>
                     @php
@@ -112,20 +113,22 @@
                       <ul class="cart-action">
                         <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
                         <li class="select-option"><a href="cart.html">Add to Cart</a></li>
-                        <li class="quickview"><a href="#" data-bs-toggle="modal"
-                            data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
+                        <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"
+                            id="{{ $product->id }}" onclick="getProductDetails(this.id)"><i class="far fa-eye"></i></a>
+                        </li>
                       </ul>
                     </div>
                   </div>
                   <div class="product-content">
                     <div class="inner">
-                      <h5 class="title"><a href="single-product.html">{{ $product->name }}</a></h5>
+                      <h5 class="title"><a
+                          href="{{ route('frontend.product', $product->slug) }}">{{ $product->name }}</a></h5>
                       <div class="product-price-variant">
                         @if ($product->discount_price != null && $product->discount_price > 0)
-                          <span class="price old-price">{{ $product->price }} TK</span>
-                          <span class="price current-price">{{ $product->discount_price }} TK</span>
+                          <span class="price current-price">{{ $product->discount_price }}৳</span>
+                          <span class="price old-price">{{ $product->price }}৳</span>
                         @else
-                          <span class="price current-price">{{ $product->price }} TK</span>
+                          <span class="price current-price">{{ $product->price }}৳</span>
                         @endif
                       </div>
                     </div>

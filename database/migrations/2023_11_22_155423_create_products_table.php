@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('subcategory_id')->constrained('sub_categories')->onDelete('cascade');
             $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->index();
             $table->string('code')->nullable();
             $table->string('thumbnail');
             $table->string('short_desc');

@@ -62,8 +62,8 @@
                 <h2 class="product-title">{{ $product->name }}</h2>
                 <span class="price-amount">
                   @if ($product->discount_price != null && $product->discount_price > 0)
-                    <span class="price old-price text-decoration-line-through">{{ $product->price }} TK</span> -
-                    <span class="price current-price">{{ $product->discount_price }} TK</span>
+                    <span class="price old-price text-decoration-line-through text-secondary">{{ $product->price }}৳</span>
+                    <span class="price current-price">{{ $product->discount_price }}৳</span>
                   @else
                     <span class="price current-price">{{ $product->price }} TK</span>
                   @endif
@@ -410,7 +410,7 @@
                     <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
                     <li class="select-option"><a href="cart.html">Add to Cart</a></li>
                     <li class="quickview"><a href="#" data-bs-toggle="modal"
-                        data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
+                        data-bs-target="#quick-view-modal" id="{{ $product->id }}" onclick="getProductDetails(this.id)"><i class="far fa-eye"></i></a></li>
                   </ul>
                 </div>
               </div>

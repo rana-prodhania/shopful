@@ -20,6 +20,9 @@
   @include('frontend.layouts.partials.footer')
   <!-- End Footer Area  -->
 
+  <!-- Modal -->
+  @include('frontend.layouts.partials.modal')
+
   <!-- JS
 ============================================ -->
   @include('frontend.layouts.partials.scripts')

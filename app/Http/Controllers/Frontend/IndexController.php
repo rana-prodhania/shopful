@@ -18,23 +18,31 @@ class IndexController extends Controller
         $categories = Category::all();
         return view('frontend.index', compact('sliders', 'newProducts', 'categories'));
     }
-    public function category($slug){
+    public function category($slug)
+    {
         $category = Category::where('slug', $slug)->with('subCategories')->select('id', 'name')->first();
         $products = Product::where('category_id', $category->id)->where('status', 1)->orderBy('id', 'desc')->get();
         return view('frontend.category', compact('category', 'products'));
     }
 
-    public function subCategory($slug){
+    public function subCategory($slug)
+    {
         $subCategory = SubCategory::where('slug', $slug)->first();
         $products = Product::where('subcategory_id', $subCategory->id)->where('status', 1)->orderBy('id', 'desc')->get();
         return view('frontend.subcategory', compact('subCategory', 'products'));
     }
 
-    public function product($slug){
+    public function productDetail($slug)
+    {
         $product = Product::where('slug', $slug)->with('productImages')->first();
         $productColors = explode(',', $product->color);
         $relatedProducts = Product::where('category_id', $product->category_id)->where('id', '!=', $product->id)->where('status', 1)->orderBy('id', 'desc')->limit(4)->get();
-         return view('frontend.product-detail', compact('product', 'productColors', 'relatedProducts'));
+        return view('frontend.product-detail', compact('product', 'productColors', 'relatedProducts'));
     }
 
+    public function productModal($id)
+    {
+        $product = Product::where('id', $id)->select('id', 'name', 'price', 'discount_price', 'quantity', 'in_stock', 'short_desc', 'thumbnail')->first();
+        return $product;
+    }
 }

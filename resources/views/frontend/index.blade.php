@@ -72,20 +72,22 @@
                     <ul class="cart-action">
                       <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
                       <li class="select-option"><a href="cart.html">Add to Cart</a></li>
-                      <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i
-                            class="far fa-eye"></i></a></li>
+                      <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"
+                          id="{{ $product->id }}" onclick="getProductDetails(this.id)"><i class="far fa-eye"></i></a>
+                      </li>
                     </ul>
                   </div>
                 </div>
                 <div class="product-content">
                   <div class="inner">
-                    <h5 class="title"><a href="{{ route('frontend.product', $product->slug) }}">{{ $product->name }}</a></h5>
+                    <h5 class="title"><a href="{{ route('frontend.product', $product->slug) }}">{{ $product->name }}</a>
+                    </h5>
                     <div class="product-price-variant">
                       @if ($product->discount_price != null && $product->discount_price > 0)
-                      <span class="price old-price">{{ $product->price }} TK</span>
-                        <span class="price current-price">{{ $product->discount_price }} TK</span>
+                        <span class="price current-price">{{ $product->discount_price }}৳</span>
+                        <span class="price old-price">{{ $product->price }}৳</span>
                       @else
-                        <span class="price current-price">{{ $product->price }} TK</span>
+                        <span class="price current-price">{{ $product->price }}৳</span>
                       @endif
                     </div>
                   </div>
@@ -110,20 +112,19 @@
         <h2 class="title">Browse by Category</h2>
       </div>
       <div class="categrie-product-activation slick-layout-wrapper--15 axil-slick-arrow  arrow-top-slide">
-        
+
         <!-- End .slick-single-layout -->
         @forelse ($categories as $category)
-        <div class="slick-single-layout">
-          <div class="categrie-product" data-sal="zoom-out" data-sal-delay="200" data-sal-duration="500">
-            <a href="#">
-              <img class="img-fluid" src="{{ asset($category->image) }}" alt="product categorie">
-              <h6 class="cat-title">{{ $category->name }}</h6>
-            </a>
+          <div class="slick-single-layout">
+            <div class="categrie-product" data-sal="zoom-out" data-sal-delay="200" data-sal-duration="500">
+              <a href="#">
+                <img class="img-fluid" src="{{ asset($category->image) }}" alt="product categorie">
+                <h6 class="cat-title">{{ $category->name }}</h6>
+              </a>
+            </div>
+            <!-- End .categrie-product -->
           </div>
-          <!-- End .categrie-product -->
-        </div>
         @empty
-          
         @endforelse
       </div>
     </div>
@@ -1673,7 +1674,7 @@
 @push('page-js')
   <script>
     $(document).ready(function() {
-      $('.department-nav-menu').removeClass('d-none').addClass('d-block');
+      $('.department-nav-menu').removeClass('d-none').addClass('d-block')
     })
   </script>
 @endpush
