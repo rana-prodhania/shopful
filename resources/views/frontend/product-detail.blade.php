@@ -126,7 +126,7 @@
 
                 <!-- Start Product Action  -->
                 <ul class="product-action d-flex-center mb--0">
-                  <li class="add-to-cart"><a href="cart.html" class="axil-btn btn-bg-primary">Add to Cart</a></li>
+                  <li class="add-to-cart"><a href="javascript:void(0)"onclick="addToCart({{ $product->id }})" class="axil-btn btn-bg-primary">Add to Cart</a></li>
                   <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i
                         class="far fa-heart"></i></a></li>
                 </ul>
@@ -419,10 +419,10 @@
                   <h5 class="title"><a href="single-product.html">{{ $product->name }}</a></h5>
                   <div class="product-price-variant">
                     @if ($product->discount_price != null && $product->discount_price > 0)
-                      <span class="price old-price">{{ $product->price }} TK</span>
-                      <span class="price current-price">{{ $product->discount_price }} TK</span>
+                      <span class="price old-price">{{ $product->price }} ৳</span>
+                      <span class="price current-price">{{ $product->discount_price }}৳</span>
                     @else
-                      <span class="price current-price">{{ $product->price }} TK</span>
+                      <span class="price current-price">{{ $product->price }}৳</span>
                     @endif
                   </div>
                 </div>

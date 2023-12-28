@@ -71,7 +71,7 @@
                   <div class="product-hover-action">
                     <ul class="cart-action">
                       <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
-                      <li class="select-option"><a href="cart.html">Add to Cart</a></li>
+                      <li class="select-option"><a href="javascript:void(0)" onclick="addToCart({{ $product->id }})">Add to Cart</a></li>
                       <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"
                           id="{{ $product->id }}" onclick="getProductDetails(this.id)"><i class="far fa-eye"></i></a>
                       </li>
@@ -132,7 +132,7 @@
   <!-- End Categorie Area  -->
 
   <!-- Start Best Sellers Product Area  -->
-  <div class="axil-best-seller-product-area bg-color-white axil-section-gap pt--0">
+  {{-- <div class="axil-best-seller-product-area bg-color-white axil-section-gap pt--0">
     <div class="container">
       <div class="product-area pb--50">
         <div class="section-title-wrapper">
@@ -150,8 +150,9 @@
                 </a>
                 <div class="product-hover-action">
                   <ul class="cart-action">
+                    <input type="hidden" name="product_id" id="product_id">
                     <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
-                    <li class="select-option"><a href="cart.html">Add to Cart</a></li>
+                    <li class="select-option"><a href="" onclick="addToCart()">Add to Cart</a></li>
                     <li class="quickview"><a href="#" data-bs-toggle="modal"
                         data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
                   </ul>
@@ -482,11 +483,11 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
   <!-- End  Best Sellers Product Area  -->
 
   <!-- Poster Countdown Area  -->
-  <div class="axil-poster-countdown">
+  {{-- <div class="axil-poster-countdown">
     <div class="container">
       <div class="poster-countdown-wrap bg-lighter">
         <div class="row">
@@ -516,11 +517,11 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
   <!-- End Poster Countdown Area  -->
 
   <!-- Start Expolre Product Area  -->
-  <div class="axil-product-area bg-color-white axil-section-gap">
+  {{-- <div class="axil-product-area bg-color-white axil-section-gap">
     <div class="container">
       <div class="section-title-wrapper">
         <span class="title-highlighter highlighter-primary"> <i class="fal fa-store"></i> Our Products</span>
@@ -1210,11 +1211,11 @@
       </div>
 
     </div>
-  </div>
+  </div> --}}
   <!-- End Expolre Product Area  -->
 
   <!-- Start Testimonila Area  -->
-  <div class="axil-testimoial-area axil-section-gap bg-vista-white">
+  {{-- <div class="axil-testimoial-area axil-section-gap bg-vista-white">
     <div class="container">
       <div class="section-title-wrapper">
         <span class="title-highlighter highlighter-secondary"> <i class="fal fa-quote-left"></i>Testimonials</span>
@@ -1306,11 +1307,11 @@
 
       </div>
     </div>
-  </div>
+  </div> --}}
   <!-- End Testimonila Area  -->
 
   <!-- Start New Arrivals Product Area  -->
-  <div class="axil-new-arrivals-product-area bg-color-white axil-section-gap pb--50">
+  {{-- <div class="axil-new-arrivals-product-area bg-color-white axil-section-gap pb--50">
     <div class="container">
       <div class="section-title-wrapper">
         <span class="title-highlighter highlighter-primary"><i class="far fa-shopping-basket"></i> This Week’s</span>
@@ -1647,11 +1648,11 @@
         <!-- End .slick-single-layout -->
       </div>
     </div>
-  </div>
+  </div> --}}
   <!-- End New Arrivals Product Area  -->
 
   <!-- Start Axil Newsletter Area  -->
-  <div class="axil-newsletter-area axil-section-gap pt--0">
+  {{-- <div class="axil-newsletter-area axil-section-gap pt--0">
     <div class="container">
       <div class="etrade-newsletter-wrapper bg_image bg_image--12">
         <div class="newsletter-content">
@@ -1667,7 +1668,7 @@
       </div>
     </div>
     <!-- End .container -->
-  </div>
+  </div> --}}
   <!-- End Axil Newsletter Area  -->
 
 @endSection

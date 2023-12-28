@@ -37,18 +37,13 @@
 </script>
 <script type="text/javascript">
   const assetBaseUrl = "{{ asset('') }}";
-  $ajaxSetup = {
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  }
+  const crsfToken = "{{ csrf_token() }}";
 
+  // get product details
   function getProductDetails(id) {
     $.ajax({
       url: "{{ url('/product/view') }}" + '/' + id,
-      type: 'get',
       success: function(data) {
-        console.log(data.thumbnail);
         $('#product-title').text(data.name);
         if (data.discount_price != null) {
           $('#price-old').text(data.price + '৳');
@@ -68,8 +63,8 @@
 
 
         if (data.thumbnail) {
-          var imageUrl = assetBaseUrl + data.thumbnail;
-          
+          const imageUrl = assetBaseUrl + data.thumbnail;
+
           $('.product-thumbnail').html('<img class="thumb-img" src="' + imageUrl + '" alt="Product Image">');
         }
 
@@ -79,7 +74,71 @@
         } else {
           $('#product-discount').text('New');
         }
+      }
+    })
+  }
 
+  viewCart()
+
+  // add to cart
+  function addToCart(id) {
+    $.ajax({
+      type: 'POST',
+      url: "{{ url('/cart/add') }}",
+      data: {
+        _token: crsfToken,
+        id: id
+      },
+      success: function(data) {
+        viewCart()
+      }
+    })
+  }
+
+
+  function viewCart() {
+    $.ajax({
+      url: "{{ url('/cart/view') }}",
+      success: function(data) {
+        $('#cart-count').text(data.cartQty);
+        let productCart = ""
+        $('#productCart').html("")
+        if (data.cartQty > 0) {
+          $.each(data.carts, function(key, value) {
+            const imageUrl = assetBaseUrl + value.options.image
+            productCart += `
+            <li class="cart-item">
+            <div class="item-img">
+              <a href="single-product.html"><img src="${imageUrl}"
+                alt="product image"></a>
+            <a class="close-btn" type="submit" id="${value.rowId}" onclick="deleteCart(this.id)"><i class="fas fa-times text-danger pt-3 ps-3"></i></a>
+          </div>
+          <div class="item-content">
+            
+            <h3 class="item-title"><a id="cart-title" href="single-product-3.html">${value.name}</a></h3>
+            <div class="item-price">${value.price}<span class="currency-symbol">৳</span></div>
+            <div class="pro-qty item-quantity">
+              <span class="dec qtybtn">-</span>
+              <input type="number" class="quantity-input" value="${value.qty}">
+              <span class="inc qtybtn">+</span>
+            </div>
+          </div>
+          </li>
+          `
+            $('#productCart').html(productCart)
+          });
+        }
+        $('#cart-subtotal').text(data.cartTotal + '৳');
+      }
+    })
+  }
+
+  // delete cart
+  function deleteCart(rowId) {
+    $.ajax({
+      url: "{{ url('/cart/delete') }}" + '/' + rowId,
+      success: function(data) {
+        viewCart()
       }
     })
   }

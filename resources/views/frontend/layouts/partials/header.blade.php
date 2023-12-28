@@ -186,8 +186,8 @@
               </a>
             </li>
             <li class="shopping-cart">
-              <a href="#" class="cart-dropdown-btn">
-                <span class="cart-count">3</span>
+              <a href="javascript:void(0)" onclick="viewCart()" class="cart-dropdown-btn">
+                <span class="cart-count" id="cart-count"></span>
                 <i class="flaticon-shopping-cart"></i>
               </a>
             </li>

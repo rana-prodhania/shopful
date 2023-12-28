@@ -5,11 +5,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
-use App\Http\Controllers\Frontend\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +35,13 @@ route::name('frontend.')->group(function () {
     route::get('/category/{slug}', [IndexController::class, 'category'])->name('category');
     route::get('/subcategory/{slug}', [IndexController::class, 'subcategory'])->name('subcategory');
     route::get('/product/{slug}', [IndexController::class, 'productDetail'])->name('product');
+    // Ajax Routes
     route::get('/product/view/{id}', [IndexController::class, 'productModal'])->name('product.modal');
+    // Add To Cart
+    route::post('/cart/add/', [CartController::class, 'addToCart'])->name('cart.store');
+    route::get('/cart/view/', [CartController::class, 'viewCart'])->name('cart.view');
+    route::get('/cart/delete/{rowId}', [CartController::class, 'deleteCart'])->name('cart.delete');
+    
 });
 /*
 |--------------------------------------------------------------------------

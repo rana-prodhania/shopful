@@ -15,7 +15,6 @@
                   <div
                     class="single-product-thumbnail product-large-thumbnail axil-product thumbnail-badge zoom-gallery">
                     <div class="thumbnail product-thumbnail">
-                     
                       <div class="label-block label-right">
                         <div class="product-badget" id="product-discount"></div>
                       </div>
@@ -25,7 +24,6 @@
                 <div class="col-lg-2 order-lg-1">
                   <div class="product-small-thumb small-thumb-wrapper">
                     <div class="small-thumb-img product-thumbnail">
-                      
                     </div>
                   </div>
                 </div>
@@ -48,8 +46,8 @@
                   </div>
                   <h3 class="product-title" id="product-title"></h3>
                   <span class="price-amount" id="price-amount">
-                      <span class="price old-price text-decoration-line-through text-secondary" id="price-old"></span>
-                      <span class="price current-price" id="price-new"></span>
+                    <span class="price old-price text-decoration-line-through text-secondary" id="price-old"></span>
+                    <span class="price current-price" id="price-new"></span>
                   </span>
                   <ul class="product-meta">
                     <li id="stock"></li>
@@ -57,22 +55,47 @@
                     <li><i class="fal fa-check"></i>Sales 30% Off Use Code: MOTIVE30</li>
                   </ul>
                   <p class="description" id="short-desc"></p>
+                  <div class="product-variations-wrapper">
 
+                    <!-- Start Product Variation  -->
+                    <div class="product-variation">
+                      <h6 class="title">Colors:</h6>
+                      <div class="color-variant-wrapper">
+                        <ul class="color-variant mt--0">
+                          <li class="color-extra-01 active"><span><span class="color"></span></span>
+                          </li>
+                          <li class="color-extra-02"><span><span class="color"></span></span>
+                          </li>
+                          <li class="color-extra-03"><span><span class="color"></span></span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- End Product Variation  -->
+                  </div>
                   <!-- Start Product Action Wrapper  -->
+                  {{-- <form id="add-to-cart-form" action="{{ route('frontend.cart.store',$product->id) }}" method="POST">
+                  @csrf --}}
                   <div class="product-action-wrapper d-flex-center">
                     <!-- Start Quentity Action  -->
-                    <div class="pro-qty"><input type="text" value="1" min="1"></div>
+                    <div class="pro-qty">
+                      <input type="number" id="quantity" name="quantity" value="1" min="1">
+                    </div>
                     <!-- End Quentity Action  -->
 
                     <!-- Start Product Action  -->
                     <ul class="product-action d-flex-center mb--0">
-                      <li class="add-to-cart"><a href="cart.html" class="axil-btn btn-bg-primary">Add to Cart</a></li>
+                      <li class="add-to-cart">
+                        {{-- <button type="submit" class="axil-btn btn-bg-primary">Add to Cart</button> --}}
+                        <a href="javascript:void(0)" onclick="addToCart({{ $product->id }})" class="axil-btn btn-bg-primary">Add to Cart</a>
+                      </li>
                       <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i
                             class="far fa-heart"></i></a></li>
                     </ul>
                     <!-- End Product Action  -->
 
                   </div>
+                {{-- </form> --}}
                   <!-- End Product Action Wrapper  -->
                 </div>
               </div>
@@ -175,85 +198,15 @@
       <button class="cart-close sidebar-close"><i class="fas fa-times"></i></button>
     </div>
     <div class="cart-body">
-      <ul class="cart-item-list">
-        <li class="cart-item">
-          <div class="item-img">
-            <a href="single-product.html"><img src="assets/images/product/electric/product-01.png"
-                alt="Commodo Blown Lamp"></a>
-            <button class="close-btn"><i class="fas fa-times"></i></button>
-          </div>
-          <div class="item-content">
-            <div class="product-rating">
-              <span class="icon">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-              </span>
-              <span class="rating-number">(64)</span>
-            </div>
-            <h3 class="item-title"><a href="single-product-3.html">Wireless PS Handler</a></h3>
-            <div class="item-price"><span class="currency-symbol">$</span>155.00</div>
-            <div class="pro-qty item-quantity">
-              <input type="number" class="quantity-input" value="15">
-            </div>
-          </div>
-        </li>
-        <li class="cart-item">
-          <div class="item-img">
-            <a href="single-product-2.html"><img src="assets/images/product/electric/product-02.png"
-                alt="Commodo Blown Lamp"></a>
-            <button class="close-btn"><i class="fas fa-times"></i></button>
-          </div>
-          <div class="item-content">
-            <div class="product-rating">
-              <span class="icon">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-              </span>
-              <span class="rating-number">(4)</span>
-            </div>
-            <h3 class="item-title"><a href="single-product-2.html">Gradient Light Keyboard</a></h3>
-            <div class="item-price"><span class="currency-symbol">$</span>255.00</div>
-            <div class="pro-qty item-quantity">
-              <input type="number" class="quantity-input" value="5">
-            </div>
-          </div>
-        </li>
-        <li class="cart-item">
-          <div class="item-img">
-            <a href="single-product-3.html"><img src="assets/images/product/electric/product-03.png"
-                alt="Commodo Blown Lamp"></a>
-            <button class="close-btn"><i class="fas fa-times"></i></button>
-          </div>
-          <div class="item-content">
-            <div class="product-rating">
-              <span class="icon">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-              </span>
-              <span class="rating-number">(6)</span>
-            </div>
-            <h3 class="item-title"><a href="single-product.html">HD CC Camera</a></h3>
-            <div class="item-price"><span class="currency-symbol">$</span>200.00</div>
-            <div class="pro-qty item-quantity">
-              <input type="number" class="quantity-input" value="100">
-            </div>
-          </div>
-        </li>
+      <ul class="cart-item-list" >
+        <div id="productCart">
+        </div>
       </ul>
     </div>
     <div class="cart-footer">
       <h3 class="cart-subtotal">
         <span class="subtotal-title">Subtotal:</span>
-        <span class="subtotal-amount">$610.00</span>
+        <span class="subtotal-amount" id="cart-subtotal"></span>
       </h3>
       <div class="group-btn">
         <a href="cart.html" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
