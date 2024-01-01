@@ -87,7 +87,7 @@
                     <ul class="product-action d-flex-center mb--0">
                       <li class="add-to-cart">
                         {{-- <button type="submit" class="axil-btn btn-bg-primary">Add to Cart</button> --}}
-                        <a href="javascript:void(0)" onclick="addToCart({{ $product->id }})" class="axil-btn btn-bg-primary">Add to Cart</a>
+                        <a href="javascript:void(0)" onclick="addToCart({{ $product->id??null }})" class="axil-btn btn-bg-primary">Add to Cart</a>
                       </li>
                       <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i
                             class="far fa-heart"></i></a></li>

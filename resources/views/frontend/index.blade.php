@@ -70,7 +70,7 @@
                   @endif
                   <div class="product-hover-action">
                     <ul class="cart-action">
-                      <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
+                      <li class="wishlist"><a href="javascript:void(0)" onclick="addToWishlist({{ $product->id }})"><i class="far fa-heart"></i></a></li>
                       <li class="select-option"><a href="javascript:void(0)" onclick="addToCart({{ $product->id }})">Add to Cart</a></li>
                       <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"
                           id="{{ $product->id }}" onclick="getProductDetails(this.id)"><i class="far fa-eye"></i></a>

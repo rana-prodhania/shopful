@@ -15,8 +15,7 @@ class CartController extends Controller
         $product = Product::findOrFail($request->id);
 
         Cart::add($product->id, $product->name, $request->quantity ?? 1, $product->discount_price ?? $product->price, ['image' => $product->thumbnail]);
-        toastr()->addSuccess('Product added to cart');
-        return to_route('frontend.home');
+        return response()->json(['status' => 'success', 'message' => 'Product added to cart']);
     }
 
     // View Cart
@@ -37,7 +36,7 @@ class CartController extends Controller
     public function deleteCart($rowId){
         Cart::remove($rowId);
         toastr()->addSuccess('Product removed from cart');
-        return to_route('frontend.cart.view');
+        return response()->json(['status' => 'success', 'message' => 'Product removed from cart']);
     }
 
 }

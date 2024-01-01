@@ -58,7 +58,7 @@
                           class="img-fluid w-25">
                       </div>
                       <div class="media-body">
-                        <h5 class="title mb-0">Hello {{ auth()->user()->name }}</h5>
+                        <h5 class="title mb-0">Hello, {{ auth()->user()->name }}</h5>
                         <span class="joining-date">eTrade Member Since Sep 2020</span>
                       </div>
                     </div>

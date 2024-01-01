@@ -181,7 +181,7 @@
               </a>
             </li>
             <li class="wishlist">
-              <a href="wishlist.html">
+              <a href="{{ route('frontend.wishlist') }}">
                 <i class="flaticon-heart"></i>
               </a>
             </li>

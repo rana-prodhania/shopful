@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Frontend\CartController;
@@ -11,6 +10,7 @@ use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Frontend\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +41,10 @@ route::name('frontend.')->group(function () {
     route::post('/cart/add/', [CartController::class, 'addToCart'])->name('cart.store');
     route::get('/cart/view/', [CartController::class, 'viewCart'])->name('cart.view');
     route::get('/cart/delete/{rowId}', [CartController::class, 'deleteCart'])->name('cart.delete');
+    // WishList Routes
+    route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.store')->middleware('auth');
+    route::get('/wishlist/view', [WishlistController::class, 'viewWishlist'])->name('wishlist')->middleware('auth');
+    route::get('/wishlist/{id}', [WishlistController::class, 'removeWishlist'])->name('wishlist.remove')->middleware('auth');
     
 });
 /*

@@ -20,5 +20,7 @@
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/vendor/magnific-popup.css') }}">
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/vendor/base.css') }}">
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.min.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
 
 @stack('page-css')

@@ -2,6 +2,7 @@
 <html class="no-js" lang="en">
 
 <head>
+  @section('title', 'Register')
   @include('frontend.layouts.partials.head')
 </head>
 
@@ -13,7 +14,7 @@
     <div class="signin-header">
       <div class="row align-items-center">
         <div class="col-md-6">
-          <a href="index.html" class="site-logo"><img src="{{ asset('frontend/assets/images/logo/logo.png') }}"
+          <a href="{{ route('frontend.home') }}" class="site-logo"><img src="{{ asset('frontend/assets/images/logo/logo.png') }}"
               alt="logo"></a>
         </div>
         <div class="col-md-6">

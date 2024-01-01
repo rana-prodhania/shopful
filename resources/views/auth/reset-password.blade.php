@@ -2,6 +2,7 @@
 <html class="no-js" lang="en">
 
 <head>
+  @section('title', 'Reset Password')
   @include('frontend.layouts.partials.head')
 </head>
 

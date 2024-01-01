@@ -20,7 +20,11 @@
 
 <!-- Main JS -->
 <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 {{-- Custom JS --}}
+<script>
+  toastr.options.progressBar = true;
+</script>
 
 <script>
   $(document).ready(function() {
@@ -89,13 +93,16 @@
         _token: crsfToken,
         id: id
       },
-      success: function(data) {
+      success: function(response) {
+        if (response.status === 'success') {
+          toastr.success(response.message, 'Success');
+        }
         viewCart()
       }
     })
   }
 
-
+  // view cart
   function viewCart() {
     $.ajax({
       url: "{{ url('/cart/view') }}",
@@ -137,10 +144,42 @@
   function deleteCart(rowId) {
     $.ajax({
       url: "{{ url('/cart/delete') }}" + '/' + rowId,
-      success: function(data) {
+      success: function(response) {
+        if (response.status === 'success') {
+          toastr.success(response.message, 'Success');
+        }
         viewCart()
+        
+      }
+    })
+  }
+
+  // add to wishlist
+  function addToWishlist(id) {
+    $.ajax({
+      type: 'POST',
+      url: "{{ url('/wishlist/add') }}",
+      data: {
+        _token: crsfToken,
+        id: id
+      },
+      success: function(response) {
+        if (response.status === 'success') {
+          toastr.success(response.message, 'Success');
+        } else if (response.status === 'exists') {
+          toastr.warning(response.message, 'Warning');        
+        } else {
+          console.log('Unexpected response');
+        }
+      },
+      error: function(response) {
+        if(response.status === 401){
+          window.location.href = "{{ route('login') }}";
+          // toastr.error('Please login first');
+        }
       }
     })
   }
 </script>
+
 @stack('page-js')
