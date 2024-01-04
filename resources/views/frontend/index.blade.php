@@ -117,7 +117,7 @@
         @forelse ($categories as $category)
           <div class="slick-single-layout">
             <div class="categrie-product" data-sal="zoom-out" data-sal-delay="200" data-sal-duration="500">
-              <a href="#">
+              <a href="{{ route('frontend.category', $category->slug) }}">
                 <img class="img-fluid" src="{{ asset($category->image) }}" alt="product categorie">
                 <h6 class="cat-title">{{ $category->name }}</h6>
               </a>

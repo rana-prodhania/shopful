@@ -32,11 +32,25 @@ class CartController extends Controller
         ]);
     }
 
+    // All Cart
+    public function allCart()
+    {
+        $carts = Cart::content();
+        return view('frontend.cart', compact('carts'));
+    }
+
     // delete cart
     public function deleteCart($rowId){
         Cart::remove($rowId);
         toastr()->addSuccess('Product removed from cart');
         return response()->json(['status' => 'success', 'message' => 'Product removed from cart']);
+    }
+
+    // destroy all cart
+    public function destroyCart(){
+        Cart::destroy();
+        toastr()->addSuccess('All Cart cleared successfully');
+        return redirect()->back();
     }
 
 }

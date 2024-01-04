@@ -209,7 +209,7 @@
         <span class="subtotal-amount" id="cart-subtotal"></span>
       </h3>
       <div class="group-btn">
-        <a href="cart.html" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
+        <a href="{{ route('frontend.cart') }}" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
         <a href="checkout.html" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
       </div>
     </div>
