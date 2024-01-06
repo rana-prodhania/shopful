@@ -57,7 +57,7 @@ class CouponController extends Controller
      */
     public function edit(string $id)
     {
-        $coupon = Coupon::find($id);
+        $coupon = Coupon::findOrFail($id);
         return view('admin.coupon.edit', compact('coupon'));
     }
 
@@ -71,7 +71,7 @@ class CouponController extends Controller
             'discount' => 'required',
             'validity' => 'required',
         ]);
-        $coupon = Coupon::find($id);
+        $coupon = Coupon::findOrFail($id);
         $coupon->code = $request->code;
         $coupon->discount = $request->discount;
         $coupon->validity = $request->validity;
@@ -85,7 +85,7 @@ class CouponController extends Controller
      */
     public function destroy(string $id)
     {
-        $coupon = Coupon::find($id);
+        $coupon = Coupon::findOrFail($id);
         $coupon->delete();
         toastr()->addSuccess('Coupon deleted successfully');
         return to_route('admin.coupon.index');

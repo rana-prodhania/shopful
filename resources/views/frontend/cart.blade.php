@@ -9,78 +9,71 @@
           <h4 class="title">Your Cart</h4>
           <a href="{{ route('frontend.cart.destroy') }}" class="cart-clear">Clear Shoping Cart</a>
         </div>
-        <div class="table-responsive">
-          <table class="table axil-product-table axil-cart-table mb--40">
-            <thead>
-              <tr>
-                <th scope="col" class="product-remove"></th>
-                <th scope="col" class="product-thumbnail">Product</th>
-                <th scope="col" class="product-title"></th>
-                <th scope="col" class="product-price">Price</th>
-                <th scope="col" class="product-quantity">Quantity</th>
-                <th scope="col" class="product-subtotal">Subtotal</th>
-              </tr>
-            </thead>
-            <tbody>
-              @forelse ($carts as $cart)
+        <form action="{{ route('frontend.cart.update') }}" method="post">
+          @csrf
+          <div class="table-responsive">
+            <table class="table axil-product-table axil-cart-table mb--40">
+              <thead>
                 <tr>
-                  <td class="product-remove"><a href="#" class="remove-wishlist"><i class="fal fa-times"></i></a>
-                  </td>
-                  <td class="product-thumbnail"><a href="single-product-2.html"><img
-                        src="{{ asset($cart->options->image) }}" alt="Digital Product"></a></td>
-                  <td class="product-title"><a href="single-product-2.html">{{ $cart->name }}</a></td>
-                  <td class="product-price" data-title="Price">{{ $cart->price }}<span class="currency-symbol">৳</span>
-                  </td>
-                  <td class="product-quantity" data-title="Qty">
-                    <div class="pro-qty">
-                      <input type="number" class="quantity-input" value="{{ $cart->qty }}">
-                    </div>
-                  </td>
-                  <td class="product-subtotal" data-title="Subtotal">{{ $cart->subtotal }}<span
-                      class="currency-symbol">৳</span></td>
+                  <th scope="col" class="product-remove"></th>
+                  <th scope="col" class="product-thumbnail">Product</th>
+                  <th scope="col" class="product-title"></th>
+                  <th scope="col" class="product-price">Price</th>
+                  <th scope="col" class="product-quantity">Quantity</th>
+                  <th scope="col" class="product-subtotal">Subtotal</th>
                 </tr>
-              @empty
-              @endforelse
-              {{-- <tr>
-                <td class="product-remove"><a href="#" class="remove-wishlist"><i class="fal fa-times"></i></a></td>
-                <td class="product-thumbnail"><a href="single-product-2.html"><img
-                      src="assets/images/product/electric/product-02.png" alt="Digital Product"></a></td>
-                <td class="product-title"><a href="single-product-2.html">Gradient Light Keyboard</a></td>
-                <td class="product-price" data-title="Price"><span class="currency-symbol">$</span>124.00</td>
-                <td class="product-quantity" data-title="Qty">
-                  <div class="pro-qty">
-                    <input type="number" class="quantity-input" value="1">
-                  </div>
-                </td>
-                <td class="product-subtotal" data-title="Subtotal"><span class="currency-symbol">$</span>275.00</td>
-              </tr>
-              <tr>
-                <td class="product-remove"><a href="#" class="remove-wishlist"><i class="fal fa-times"></i></a></td>
-                <td class="product-thumbnail"><a href="single-product-3.html"><img
-                      src="assets/images/product/electric/product-03.png" alt="Digital Product"></a></td>
-                <td class="product-title"><a href="single-product-3.html">HD CC Camera</a></td>
-                <td class="product-price" data-title="Price"><span class="currency-symbol">$</span>124.00</td>
-                <td class="product-quantity" data-title="Qty">
-                  <div class="pro-qty">
-                    <input type="number" class="quantity-input" value="1">
-                  </div>
-                </td>
-                <td class="product-subtotal" data-title="Subtotal"><span class="currency-symbol">$</span>275.00</td>
-              </tr> --}}
-            </tbody>
-          </table>
-        </div>
-        <div class="cart-update-btn-area">
-          <div class="input-group product-cupon">
-            <input placeholder="Enter coupon code" type="text">
-            <div class="product-cupon-btn">
-              <button type="submit" class="axil-btn btn-outline">Apply</button>
-            </div>
+              </thead>
+              <tbody>
+                @forelse ($carts as $cart)
+                  <form action="{{ route('frontend.cart.update') }}" method="post">
+                    @csrf
+                    <tr>
+                      <input type="hidden" name="rowId" id="cartId" value="{{ $cart->rowId }}">
+                      <td class="product-remove">
+                        <a href="{{ route('frontend.cart.delete', $cart->rowId) }}" class="remove-wishlist">
+                          <i class="fal fa-times"></i>
+                        </a>
+                      </td>
+                      <td class="product-thumbnail"><a href="single-product-2.html"><img
+                            src="{{ asset($cart->options->image) }}" alt="Digital Product"></a></td>
+                      <td class="product-title"><a href="single-product-2.html">{{ $cart->name }}</a></td>
+                      <td class="product-price" data-title="Price">{{ $cart->price }}<span
+                          class="currency-symbol">৳</span>
+                      </td>
+                      <td class="product-quantity" data-title="Qty">
+                        <div class="pro-qty">
+                          <input type="number" name="quantity" id="qty" class="quantity-input"
+                            value="{{ $cart->qty }}">
+                        </div>
+                      </td>
+                      <td class="product-subtotal" data-title="Subtotal">{{ $cart->subtotal }}<span
+                          class="currency-symbol">৳</span></td>
+                    </tr>
+
+                  </form>
+                @empty
+                  <td colspan="6" class="text-center">No Product Found!</td>
+                @endforelse
+              </tbody>
+            </table>
           </div>
           <div class="update-btn">
-            <a href="#" class="axil-btn btn-outline">Update Cart</a>
+            <button type="submit" class="axil-btn btn-outline w-25">Update Cart</button>
           </div>
-        </div>
+        </form>
+        @if (!Session::has('coupon'))
+          <div class="cart-update-btn-area">
+            <form action="{{ route('frontend.coupon.apply') }}" method="post">
+              @csrf
+              <div class="input-group product-cupon" id="coupon">
+                <input placeholder="Enter coupon code" name="coupon_code" id="coupon-code" type="text">
+                <div class="product-cupon-btn">
+                  <button type="submit" class="axil-btn btn-outline">Apply</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        @endif
         <div class="row">
           <div class="col-xl-5 col-lg-7 offset-xl-7 offset-lg-5">
             <div class="axil-order-summery mt--80">
@@ -90,33 +83,36 @@
                   <tbody>
                     <tr class="order-subtotal">
                       <td>Subtotal</td>
-                      <td>$117.00</td>
+                      <td id="subtotal">{{ $cartTotal }}৳</td>
                     </tr>
-                    <tr class="order-shipping">
-                      <td>Shipping</td>
-                      <td>
-                        <div class="input-group">
-                          <input type="radio" id="radio1" name="shipping" checked>
-                          <label for="radio1">Free Shippping</label>
-                        </div>
-                        <div class="input-group">
-                          <input type="radio" id="radio2" name="shipping">
-                          <label for="radio2">Local: $35.00</label>
-                        </div>
-                        <div class="input-group">
-                          <input type="radio" id="radio3" name="shipping">
-                          <label for="radio3">Flat rate: $12.00</label>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr class="order-tax">
-                      <td>State Tax</td>
-                      <td>$8.00</td>
-                    </tr>
-                    <tr class="order-total">
-                      <td>Total</td>
-                      <td class="order-total-amount">$125.00</td>
-                    </tr>
+                    @if (Session::has('coupon'))
+                      <tr class="order-tax" id="coupon-show">
+                        <td>Coupon Code</td>
+                        <td id="coupon-code-show">{{ Session::get('coupon')['coupon_code'] }}
+                          <span>
+                            <a href="{{ route('frontend.coupon.remove') }}" onclick="removeCoupon()"><i class="fal fa-trash"></i>
+                            </a>
+                          </span>
+                        </td>
+                      </tr>
+                      <tr class="order-tax" id="coupon-show">
+                        <td>Coupon Discount(%)</td>
+                        <td id="coupon-discount">{{ Session::get('coupon')['coupon_discount'] }}%</td>
+                      </tr>
+                      <tr class="order-tax" id="coupon-show">
+                        <td>Discount Amount</td>
+                        <td id="coupon-amount">{{ Session::get('coupon')['discount_amount'] }}৳</td>
+                      </tr>
+                      <tr class="order-total">
+                        <td>Total</td>
+                        <td class="order-total-amount" id="cart-total">{{ Session::get('coupon')['total_amount'] }}৳</td>
+                      </tr>
+                    @else
+                      <tr class="order-total">
+                        <td>Total</td>
+                        <td class="order-total-amount" id="cart-total">{{ $cartTotal }}৳</td>
+                      </tr>
+                    @endif
                   </tbody>
                 </table>
               </div>

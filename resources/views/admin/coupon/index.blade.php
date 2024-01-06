@@ -35,12 +35,11 @@
                     <td>{{ $coupon->code }}</td>
                     <td>{{ $coupon->discount }}%</td>
                     <td>{{ $coupon->validity }}</td>
-                    @if ($coupon->validity >= now())
-                      <td><span class="badge rounded-pill bg-success">Valid</span></td>
-                    @else
-                      <td><span class="badge rounded-pill bg-danger">Expired</span></td>
-                      
-                    @endif
+                    <td>
+                      <span class="badge rounded-pill bg-{{ $coupon->validity >= now()->format('Y-m-d') ? 'success' : 'danger' }}">
+                        {{ $coupon->validity >= now()->format('Y-m-d') ? 'Valid' : 'Expired' }}
+                      </span>
+                    </td>
                     <td class="text-center">
                       <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.coupon.edit', $coupon->id) }}">
                         <i class="fs-5 bx bx-edit"></i>

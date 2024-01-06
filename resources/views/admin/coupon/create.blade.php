@@ -29,7 +29,7 @@
                  <label for="name" class="form-label">Coupon Discount</label>
                </div>
                <div class="col-sm-10">
-                 <input type="number" value="{{ old('code') }}" class="form-control"placeholder="Enter Coupon Discount"
+                 <input type="number" value="{{ old('code') }}" class="form-control"placeholder="Enter Coupon Discount (%)"
                    name="discount" id="name" />
                  @error('discount')
                  <span class="text-danger">{{ $message }}</span>
@@ -41,7 +41,7 @@
                  <label for="name" class="form-label">Coupon Validity</label>
                </div>
                <div class="col-sm-10">
-                 <input type="date" value="{{ old('validity') }}" class="form-control"placeholder="Enter Coupon Discount"
+                 <input type="date" value="{{ old('validity') }}" class="form-control"placeholder="Enter Coupon Validity"
                    name="validity" id="name" />
                  @error('validity')
                  <span class="text-danger">{{ $message }}</span>

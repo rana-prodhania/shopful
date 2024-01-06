@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Product;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use App\Helpers\CouponHelper;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
 {
@@ -15,6 +17,9 @@ class CartController extends Controller
         $product = Product::findOrFail($request->id);
 
         Cart::add($product->id, $product->name, $request->quantity ?? 1, $product->discount_price ?? $product->price, ['image' => $product->thumbnail]);
+        if (Session::has('coupon')) {
+            Session::forget('coupon');
+        }
         return response()->json(['status' => 'success', 'message' => 'Product added to cart']);
     }
 
@@ -32,25 +37,46 @@ class CartController extends Controller
         ]);
     }
 
+    // update cart
+    public function updateCart(Request $request)
+    {
+        $rowId = $request->rowId;
+        $quantity = $request->quantity;
+        Cart::update($rowId, $quantity);
+        if (Session::has('coupon')) {
+            Session::forget('coupon');
+        }
+        toastr()->addSuccess('Cart updated successfully');
+        return redirect()->back();
+    }
+
     // All Cart
     public function allCart()
     {
         $carts = Cart::content();
-        return view('frontend.cart', compact('carts'));
+        $cartTotal = Cart::total();
+        return view('frontend.cart', compact('carts', 'cartTotal'));
     }
 
     // delete cart
-    public function deleteCart($rowId){
+    public function deleteCart($rowId)
+    {
         Cart::remove($rowId);
-        toastr()->addSuccess('Product removed from cart');
-        return response()->json(['status' => 'success', 'message' => 'Product removed from cart']);
-    }
+        if (Session::has('coupon')) {
+            Session::forget('coupon');
+        }
 
-    // destroy all cart
-    public function destroyCart(){
-        Cart::destroy();
-        toastr()->addSuccess('All Cart cleared successfully');
         return redirect()->back();
     }
 
+    // destroy all cart
+    public function destroyCart()
+    {
+        Cart::destroy();
+        if (Session::has('coupon')) {
+            Session::forget('coupon');
+        }
+        toastr()->addSuccess('All Cart cleared successfully');
+        return redirect()->back();
+    }
 }

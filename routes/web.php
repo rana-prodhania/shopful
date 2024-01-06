@@ -5,10 +5,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Frontend\CartController;
-use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Frontend\CouponController;
+use App\Http\Controllers\Backend\CouponController as AdminCouponController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Backend\SubCategoryController;
@@ -42,12 +43,16 @@ route::name('frontend.')->group(function () {
     route::get('/cart', [CartController::class, 'allCart'])->name('cart');
     route::post('/cart/add/', [CartController::class, 'addToCart'])->name('cart.store');
     route::get('/cart/view/', [CartController::class, 'viewCart'])->name('cart.view');
+    route::post('/cart/update/', [CartController::class, 'updateCart'])->name('cart.update');
     route::get('/cart/delete/{rowId}', [CartController::class, 'deleteCart'])->name('cart.delete');
     route::get('/cart/destroy', [CartController::class, 'destroyCart'])->name('cart.destroy');
     // WishList Routes
     route::post('/wishlist/add', [WishlistController::class, 'addToWishlist'])->name('wishlist.store')->middleware('auth');
     route::get('/wishlist/view', [WishlistController::class, 'viewWishlist'])->name('wishlist')->middleware('auth');
     route::get('/wishlist/{id}', [WishlistController::class, 'removeWishlist'])->name('wishlist.remove')->middleware('auth');
+    // Coupon Routes
+    route::post('/coupon/apply', [CouponController::class, 'applyCoupon'])->name('coupon.apply');
+    route::get('/coupon/remove', [CouponController::class, 'removeCoupon'])->name('coupon.remove');
     
 });
 /*
@@ -71,5 +76,5 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(funct
     Route::get('/product/status/{product}', [ProductController::class, 'toggleStatus'])->name('product.status');
     Route::resource('/product', ProductController::class);
     Route::resource('/slider', SliderController::class);
-    Route::resource('/coupon', CouponController::class);
+    Route::resource('/coupon', AdminCouponController::class);
 });
