@@ -58,24 +58,29 @@
      </a>
    </li>
 
-   {{-- <li class="menu-item">
+   <li class="menu-item">
      <a href="javascript:void(0);" class="menu-link menu-toggle">
        <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-       <div data-i18n="Misc">Misc</div>
+       <div data-i18n="Misc">Shipping Area</div>
      </a>
      <ul class="menu-sub">
-       <li class="menu-item">
-         <a href="pages-misc-error.html" class="menu-link">
-           <div data-i18n="Error">Error</div>
+       <li class="menu-item {{ Request::is('admin/division*') ? 'active' : '' }}">
+         <a href="{{ route('admin.division.index') }}" class="menu-link">
+           <div data-i18n="Error">Division</div>
          </a>
        </li>
-       <li class="menu-item">
-         <a href="pages-misc-under-maintenance.html" class="menu-link">
-           <div data-i18n="Under Maintenance">Under Maintenance</div>
+       <li class="menu-item {{ Request::is('admin/district*') ? 'active' : '' }}">
+         <a href="{{ route('admin.district.index') }}" class="menu-link">
+           <div data-i18n="Error">District</div>
+         </a>
+       </li>
+       <li class="menu-item {{ Request::is('admin/area*') ? 'active' : '' }}">
+         <a href="{{ route('admin.area.index') }}" class="menu-link">
+           <div data-i18n="Error">Area</div>
          </a>
        </li>
      </ul>
-   </li> --}}
+   </li>
    
  </ul>
 </aside>

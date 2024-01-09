@@ -113,6 +113,7 @@
         if (data.cartQty > 0) {
           $.each(data.carts, function(key, value) {
             const imageUrl = assetBaseUrl + value.options.image
+            const roundedSubtotal = Math.round(value.subtotal);
             productCart += `
             <li class="cart-item">
             <div class="item-img">
@@ -123,12 +124,7 @@
           <div class="item-content">
             
             <h3 class="item-title"><a id="cart-title" href="single-product-3.html">${value.name}</a></h3>
-            <div class="item-price">${value.price}<span class="currency-symbol">৳</span></div>
-            <div class="pro-qty item-quantity">
-              <span class="dec qtybtn">-</span>
-              <input type="number" class="quantity-input" value="${value.qty}">
-              <span class="inc qtybtn">+</span>
-            </div>
+            <div class="item-price">${value.qty} × ${roundedSubtotal}<span class="currency-symbol">৳</span></div>
           </div>
           </li>
           `
@@ -139,26 +135,6 @@
       }
     })
   }
-
-  // // update cart
-  // function updateCart() {
-  //   const qty = $('#qty').val();
-  //   const rowId = $('#cartId').val();
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: "{{ url('/cart/update') }}",
-  //     data: {
-  //       _token: crsfToken,
-  //       rowId: rowId,
-  //       qty: qty
-  //     },
-  //     success: function(response) {
-  //       if (response.status === 'success') {
-  //         toastr.success(response.message, 'Success');
-  //       }
-  //     }
-  //   })
-  // }
 
   // delete cart
   function deleteCart(rowId) {
@@ -195,51 +171,10 @@
       error: function(response) {
         if (response.status === 401) {
           window.location.href = "{{ route('login') }}";
-          // toastr.error('Please login first');
         }
       }
     })
   }
-
-  // apply coupon
-  // function applyCoupon() {
-  //   const couponCode = $('#coupon-code').val();
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: "{{ url('/coupon/apply') }}",
-  //     data: {
-  //       _token: crsfToken,
-  //       coupon_code: couponCode
-  //     },
-  //     success: function(response) {
-  //       if (response.status === 'success') {
-  //         toastr.success(response.message, 'Success');
-  //       }
-  //       if (response.validity === true) {
-  //         $('#coupon').hide();
-  //       }
-  //       if (response.status === 'error') {
-  //         toastr.error(response.message, 'Error');
-  //       }
-  //       viewCoupon()
-  //     },
-  //   })
-  // }
-
-  // view coupon
-  // function viewCoupon() {
-  //   $.ajax({
-  //     url: "{{ url('/coupon/view') }}",
-  //     success: function(data) {
-  //       $('#subtotal').text(data.subtotal);
-  //       $('#cart-total').text(data.total_amount);
-  //       $('#coupon-code-show').text(data.coupon_code);
-  //       $('#coupon-discount').text(data.coupon_discount + '%');
-  //       $('#coupon-amount').text(data.discount_amount + '৳');
-  //       console.log(data)
-  //     }
-  //   })
-  // }
 </script>
 
 @stack('page-js')

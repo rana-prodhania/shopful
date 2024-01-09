@@ -8,6 +8,7 @@ use App\Helpers\CouponHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {

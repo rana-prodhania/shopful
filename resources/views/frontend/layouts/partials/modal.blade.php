@@ -79,7 +79,7 @@
                   <div class="product-action-wrapper d-flex-center">
                     <!-- Start Quentity Action  -->
                     <div class="pro-qty">
-                      <input type="number" id="quantity" name="quantity" value="1" min="1">
+                      <input type="number" id="quantity" name="quantity">
                     </div>
                     <!-- End Quentity Action  -->
 
@@ -210,7 +210,7 @@
       </h3>
       <div class="group-btn">
         <a href="{{ route('frontend.cart') }}" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
-        <a href="checkout.html" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
+        <a href="{{ route('frontend.checkout') }}" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
       </div>
     </div>
   </div>

@@ -25,32 +25,28 @@
               </thead>
               <tbody>
                 @forelse ($carts as $cart)
-                  <form action="{{ route('frontend.cart.update') }}" method="post">
-                    @csrf
-                    <tr>
-                      <input type="hidden" name="rowId" id="cartId" value="{{ $cart->rowId }}">
-                      <td class="product-remove">
-                        <a href="{{ route('frontend.cart.delete', $cart->rowId) }}" class="remove-wishlist">
-                          <i class="fal fa-times"></i>
-                        </a>
-                      </td>
-                      <td class="product-thumbnail"><a href="single-product-2.html"><img
-                            src="{{ asset($cart->options->image) }}" alt="Digital Product"></a></td>
-                      <td class="product-title"><a href="single-product-2.html">{{ $cart->name }}</a></td>
-                      <td class="product-price" data-title="Price">{{ $cart->price }}<span
-                          class="currency-symbol">৳</span>
-                      </td>
-                      <td class="product-quantity" data-title="Qty">
-                        <div class="pro-qty">
-                          <input type="number" name="quantity" id="qty" class="quantity-input"
-                            value="{{ $cart->qty }}">
-                        </div>
-                      </td>
-                      <td class="product-subtotal" data-title="Subtotal">{{ $cart->subtotal }}<span
-                          class="currency-symbol">৳</span></td>
-                    </tr>
+                  <input type="hidden" name="rowId" id="rowId" value="{{ $cart->rowId }}">
+                  <tr>
+                    <td class="product-remove">
+                      <a href="{{ route('frontend.cart.delete', $cart->rowId) }}" class="remove-wishlist">
+                        <i class="fal fa-times"></i>
+                      </a>
+                    </td>
+                    <td class="product-thumbnail"><a href="single-product-2.html"><img
+                          src="{{ asset($cart->options->image) }}" alt="Digital Product"></a></td>
+                    <td class="product-title"><a href="single-product-2.html">{{ $cart->name }}</a></td>
+                    <td class="product-price" data-title="Price">{{ $cart->price }}<span class="currency-symbol">৳</span>
+                    </td>
+                    <td class="product-quantity" data-title="Qty">
+                      <div class="pro-qty">
 
-                  </form>
+                        <input type="number" min="1" name="quantity" id="qty" class="quantity-input"
+                          value="{{ $cart->qty }}">
+                      </div>
+                    </td>
+                    <td class="product-subtotal" data-title="Subtotal">{{ $cart->subtotal }}<span
+                        class="currency-symbol">৳</span></td>
+                  </tr>
                 @empty
                   <td colspan="6" class="text-center">No Product Found!</td>
                 @endforelse
@@ -66,7 +62,8 @@
             <form action="{{ route('frontend.coupon.apply') }}" method="post">
               @csrf
               <div class="input-group product-cupon" id="coupon">
-                <input placeholder="Enter coupon code" name="coupon_code" id="coupon-code" type="text">
+                <input placeholder="Enter coupon code" name="coupon_code" value="{{ old('coupon_code') }}"
+                  id="coupon-code" type="text">
                 <div class="product-cupon-btn">
                   <button type="submit" class="axil-btn btn-outline">Apply</button>
                 </div>
@@ -89,34 +86,42 @@
                       <tr class="order-tax" id="coupon-show">
                         <td>Coupon Code</td>
                         <td id="coupon-code-show">{{ Session::get('coupon')['coupon_code'] }}
+                          ({{ Session::get('coupon')['coupon_discount'] }}%)
                           <span>
-                            <a href="{{ route('frontend.coupon.remove') }}" onclick="removeCoupon()"><i class="fal fa-trash"></i>
+                            <a href="{{ route('frontend.coupon.remove') }}" onclick="removeCoupon()"><i
+                                class="fal fa-trash"></i>
                             </a>
                           </span>
                         </td>
                       </tr>
                       <tr class="order-tax" id="coupon-show">
-                        <td>Coupon Discount(%)</td>
-                        <td id="coupon-discount">{{ Session::get('coupon')['coupon_discount'] }}%</td>
-                      </tr>
-                      <tr class="order-tax" id="coupon-show">
                         <td>Discount Amount</td>
                         <td id="coupon-amount">{{ Session::get('coupon')['discount_amount'] }}৳</td>
                       </tr>
+                      <tr class="order-shipping">
+                        <td>Shipping Amout</td>
+                        <td>50৳</td>
+                      </tr>
                       <tr class="order-total">
                         <td>Total</td>
-                        <td class="order-total-amount" id="cart-total">{{ Session::get('coupon')['total_amount'] }}৳</td>
+                        <td class="order-total-amount" id="cart-total">{{ Session::get('coupon')['total_amount'] + 50 }}৳
+                        </td>
                       </tr>
                     @else
+                      <tr class="order-shipping">
+                        <td>Shipping Amout</td>
+                        <td>50৳</td>
+                      </tr>
                       <tr class="order-total">
                         <td>Total</td>
-                        <td class="order-total-amount" id="cart-total">{{ $cartTotal }}৳</td>
+                        <td class="order-total-amount" id="cart-total">{{ $cartTotal + 50 }}৳</td>
                       </tr>
                     @endif
                   </tbody>
                 </table>
               </div>
-              <a href="checkout.html" class="axil-btn btn-bg-primary checkout-btn">Process to Checkout</a>
+              <a href="{{ route('frontend.checkout') }}" class="axil-btn btn-bg-primary checkout-btn">Process to
+                Checkout</a>
             </div>
           </div>
         </div>

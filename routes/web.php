@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\District;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Backend\AreaController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Frontend\CartController;
@@ -9,10 +11,13 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Frontend\CouponController;
-use App\Http\Controllers\Backend\CouponController as AdminCouponController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\DistrictController;
+use App\Http\Controllers\Backend\DivisionController;
+use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\CouponController as AdminCouponController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +58,9 @@ route::name('frontend.')->group(function () {
     // Coupon Routes
     route::post('/coupon/apply', [CouponController::class, 'applyCoupon'])->name('coupon.apply');
     route::get('/coupon/remove', [CouponController::class, 'removeCoupon'])->name('coupon.remove');
+    // Checkout Routes
+    route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout')->middleware('auth');
+    route::post('/checkout/store', [CheckoutController::class, 'checkoutStore'])->name('checkout.store')->middleware('auth');
     
 });
 /*
@@ -77,4 +85,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(funct
     Route::resource('/product', ProductController::class);
     Route::resource('/slider', SliderController::class);
     Route::resource('/coupon', AdminCouponController::class);
+    Route::resource('/division', DivisionController::class);
+    Route::resource('/district', DistrictController::class);
+    Route::resource('/area', AreaController::class);
 });
