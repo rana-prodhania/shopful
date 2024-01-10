@@ -11,9 +11,30 @@
               <a href="{{ route('admin.area.index') }}" class="btn btn-sm btn-outline-danger">Back</a>
             </div>
             <div class="card-body mt-4">
-              <form action="{{ route('admin.area.update',$area->id) }}" method="POST">
+              <form action="{{ route('admin.area.update', $area->id) }}" method="POST">
                 @csrf
                 @method('PUT')
+                <div class="mb-3 row ecommerce-select2-dropdown">
+                  <div class="col-sm-2">
+                    <label class="form-label mb-1 d-flex justify-content-between align-items-center" for="district-org">
+                      <span>Select Division</span>
+                    </label>
+                  </div>
+
+                  <div class="col-sm-10">
+                    <select id="division" name="division_id" class="select2 form-select" data-placeholder="Select Division">
+                      <option value="">Select Division</option>
+                      @forelse ($divisions as $division)
+                        <option @if ($division->id == $area->division_id) selected @endif value="{{ $division->id }}">{{ $division->name }}</option>
+                      @empty
+                        <option value="0">No Division Found!</option>
+                      @endforelse
+                    </select>
+                    @error('division')
+                      <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                  </div>
+                </div>
                 <div class="mb-3 row ecommerce-select2-dropdown">
                   <div class="col-sm-2">
                     <label class="form-label mb-1 d-flex justify-content-between align-items-center" for="district-org">
@@ -22,12 +43,9 @@
                   </div>
 
                   <div class="col-sm-10">
-                    <select id="category-org" name="district" class="select2 form-select"
+                    <select id="district" name="district_id" class="select2 form-select"
                       data-placeholder="Select District">
                       <option value="">Select District</option>
-                      @foreach ($districts as $district)
-                        <option @if ($district->id == $area->district_id) selected @endif value="{{ $district->id }}">{{ $district->name }}</option>
-                      @endforeach
                     </select>
                     @error('district')
                       <span class="text-danger">{{ $message }}</span>
@@ -39,8 +57,8 @@
                     <label for="name" class="form-label">area name</label>
                   </div>
                   <div class="col-sm-10">
-                    <input type="text" value="{{ $area->name??old('name') }}"
-                      class="form-control"placeholder="Enter area Name" name="name" id="name" />
+                    <input type="text" value="{{ $area->name ?? old('name') }}" class="form-control"placeholder="Enter Area Name"
+                      name="name" id="name" />
                     @error('name')
                       <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -69,6 +87,44 @@
   <script>
     $(document).ready(function() {
       $('.select2').select2();
+
+      const selectedDivision = $("#division").val();
+
+      if (selectedDivision) {
+        loadDistrict(selectedDivision);
+      }
+
+      // Load District
+      $("#division").on("change", function() {
+        const division_id = $("#division").val();
+        console.log(division_id);
+        if (division_id) {
+          loadDistrict(division_id);
+        } else {
+          $("#district").empty();
+        }
+      });
+
+      function loadDistrict(division_id) {
+        $.ajax({
+          url: "{{ url('/admin/district/ajax/') }}/" + division_id,
+          type: "GET",
+          success: function(data) {
+            console.log(data);
+            $("#district").empty();
+            $.each(data, function(key, value) {
+              const selected = value.id == "{{ $area->district_id }}" ? 'selected' : '';
+              $("#district").append(
+                '<option ' + selected + '  value="' +
+                value.id +
+                '">' +
+                value.name +
+                "</option>"
+              );
+            });
+          }
+        });
+      }
     });
   </script>
 @endpush

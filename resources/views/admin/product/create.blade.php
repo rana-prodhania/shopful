@@ -169,7 +169,7 @@
                     <div class="mb-3 col form-group ecommerce-select2-dropdown">
                       <label class="form-label mb-1" for="sub-category">Sub Category <span class="text-danger">*</span>
                       </label>
-                      <select id="sub-category" name="subcategory_id" id="sub-category" class="select2 form-select"
+                      <select id="sub-category" name="subcategory_id" class="select2 form-select"
                         data-placeholder="Sub Category">
                         <option value="">Sub Category</option>
                       </select>

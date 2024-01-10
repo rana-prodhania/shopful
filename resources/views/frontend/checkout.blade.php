@@ -32,18 +32,32 @@
               <div class="row">
                 <div class="form-group col">
                   <label>Division <span>*</span></label>
-                  <input type="text" name="division" id="address1" class="mb--15" placeholder="Enter your division">
-
+                  <select id="division" name="division_id">
+                    <option value="">Select Your Division</option>
+                    @forelse ($divisions as $division)
+                      <option value="{{ $division->id }}">{{ $division->name }}</option>
+                    @empty
+                      <option value="0">No Division Found!</option>
+                    @endforelse
+                  </select>
                 </div>
                 <div class="form-group col">
                   <label>District <span>*</span></label>
-                  <input type="text" name="district" id="address1" class="mb--15" placeholder="Enter your district">
+                  <select id="district" name="district_id" class="select2 form-select"
+                    data-placeholder="Select Your District">
+                    <option value="">Select Your District</option>
+                  </select>
+                  @error('district_id')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col">
-                  <label>State <span>*</span></label>
-                  <input type="text" name="town" id="town">
+                  <label>Area <span>*</span></label>
+                  <select id="area" name="area_id" class="select2 form-select" data-placeholder="Select Your Area">
+                    <option value="">Select Your Area</option>
+                  </select>
                 </div>
                 <div class="form-group col">
                   <label>Zip Code <span>*</span></label>
@@ -181,3 +195,147 @@
   </div>
   <!-- End Checkout Area  -->
 @endsection
+@push('page-js')
+  {{-- <script type="text/javascript">
+    $(document).ready(function() {
+      // Load District
+      const selectedDivision = $("#district").val();
+
+      if (selectedDivision) {
+        loadArea(selectedDivision);
+      }
+
+      $("#district").on("change", function() {
+        const district_id = $("#district").val();
+        console.log(district_id);
+        if (district_id) {
+          loadArea(district_id);
+        } else {
+          $("#area").empty();
+        }
+      });
+
+      function loadArea(district_id) {
+        $.ajax({
+          url: "{{ url('/area/ajax/') }}/" + district_id,
+          type: "GET",
+          success: function(data) {
+            $("#area").empty();
+            $.each(data, function(key, value) {
+              $("#area").append(
+                '<option  value="' +
+                value.id +
+                '">' +
+                value.name +
+                "</option>"
+              );
+            });
+          }
+        });
+      }
+
+      $("#division").on("change", function() {
+        const division_id = $("#division").val();
+        console.log(division_id);
+        if (division_id) {
+          loadDistrict(division_id);
+        } else {
+          $("#district").empty();
+        }
+      });
+
+      function loadDistrict(division_id) {
+        $.ajax({
+          url: "{{ url('/district/ajax/') }}/" + division_id,
+          type: "GET",
+          success: function(data) {
+            $("#district").empty();
+            $.each(data, function(key, value) {
+              $("#district").append(
+                '<option  value="' +
+                value.id +
+                '">' +
+                value.name +
+                "</option>"
+              );
+            });
+          }
+        });
+      }
+
+
+    })
+  </script> --}}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      // Load District
+      $("#division").on("change", function() {
+        const division_id = $("#division").val();
+        console.log(division_id);
+        if (division_id) {
+          loadDistrict(division_id);
+        } else {
+          $("#district").empty();
+        }
+      });
+  
+      function loadDistrict(division_id) {
+        $.ajax({
+          url: "{{ url('/district/ajax/') }}/" + division_id,
+          type: "GET",
+          success: function(data) {
+            $("#district").empty();
+            $.each(data, function(key, value) {
+              $("#district").append(
+                '<option value="' +
+                value.id +
+                '">' +
+                value.name +
+                "</option>"
+              );
+            });
+            const selectedDistrict = $("#district").val();
+            if (selectedDistrict) {
+              loadArea(selectedDistrict);
+            }else{
+              $("#area").empty();
+            }
+          }
+        });
+      }
+      
+      // Load Area
+      $("#district").on("change", function() {
+        const district_id = $("#district").val();
+        console.log(district_id);
+        if (district_id) {
+          loadArea(district_id);
+        } else {
+          $("#area").empty();
+        }
+      });
+  
+      function loadArea(district_id) {
+        $.ajax({
+          url: "{{ url('/area/ajax/') }}/" + district_id,
+          type: "GET",
+          success: function(data) {
+            $("#area").empty();
+            $.each(data, function(key, value) {
+              $("#area").append(
+                '<option value="' +
+                value.id +
+                '">' +
+                value.name +
+                "</option>"
+              );
+            });
+          }
+        });
+      }
+  
+      
+    });
+  </script>
+  
+@endpush

@@ -7,6 +7,7 @@ use App\Models\District;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Division;
 
 class AreaController extends Controller
 {
@@ -15,7 +16,7 @@ class AreaController extends Controller
      */
     public function index()
     {
-        $areas = Area::with('district')->get();
+        $areas = Area::with('division', 'district')->get();
         return view('admin.area.index', compact('areas'));
     }
 
@@ -24,8 +25,8 @@ class AreaController extends Controller
      */
     public function create()
     {
-        $districts = District::all();
-        return view('admin.area.create', compact('districts'));
+        $divisions = Division::all();
+        return view('admin.area.create', compact('divisions'));
     }
 
     /**
@@ -33,14 +34,17 @@ class AreaController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'name' => 'required|unique:areas',
-            'district' => 'required',
+            'division_id' => 'required',
+            'district_id' => 'required',
         ]);
         $area = new Area();
         $area->name = $request->name;
         $area->slug = Str::slug($request->name);
-        $area->district_id = $request->district;
+        $area->division_id = $request->division_id;
+        $area->district_id = $request->district_id;
         $area->save();
         toastr()->addSuccess('Area created successfully');
         return to_route('admin.area.index');
@@ -60,8 +64,8 @@ class AreaController extends Controller
     public function edit(string $id)
     {
         $area = Area::find($id);
-        $districts = District::all();
-        return view('admin.area.edit', compact('area', 'districts'));
+        $divisions = Division::all();
+        return view('admin.area.edit', compact('area', 'divisions'));
     }
 
     /**
@@ -75,7 +79,8 @@ class AreaController extends Controller
         $area = Area::find($id);
         $area->name = $request->name;
         $area->slug = Str::slug($request->name);
-        $area->district_id = $request->district;
+        $area->division_id = $request->division_id;
+        $area->district_id = $request->district_id;
         $area->save();
         toastr()->addSuccess('Area update successfully');
         return to_route('admin.area.index');

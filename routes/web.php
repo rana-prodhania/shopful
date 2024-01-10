@@ -59,8 +59,11 @@ route::name('frontend.')->group(function () {
     route::post('/coupon/apply', [CouponController::class, 'applyCoupon'])->name('coupon.apply');
     route::get('/coupon/remove', [CouponController::class, 'removeCoupon'])->name('coupon.remove');
     // Checkout Routes
+    Route::get('/district/ajax/{division_id}', [CheckoutController::class, 'getDistrict'])->name('district.ajax')->middleware('auth');
+    Route::get('/area/ajax/{district_id}', [CheckoutController::class, 'getArea'])->name('area.ajax')->middleware('auth');
     route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout')->middleware('auth');
     route::post('/checkout/store', [CheckoutController::class, 'checkoutStore'])->name('checkout.store')->middleware('auth');
+    
     
 });
 /*
@@ -86,6 +89,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->as('admin.')->group(funct
     Route::resource('/slider', SliderController::class);
     Route::resource('/coupon', AdminCouponController::class);
     Route::resource('/division', DivisionController::class);
+    Route::get('/district/ajax/{division_id}', [DistrictController::class, 'getDistrict'])->name('district.ajax')->middleware('auth');
     Route::resource('/district', DistrictController::class);
     Route::resource('/area', AreaController::class);
 });

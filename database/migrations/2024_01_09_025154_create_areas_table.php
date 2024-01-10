@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->foreignId('division_id')->constrained()->onDelete('cascade');
             $table->foreignId('district_id')->constrained()->onDelete('cascade');
+
             $table->timestamps();
         });
     }

@@ -23,7 +23,7 @@
                 <tr>
                   <th>S/N</th>
                   <th>Name</th>
-                  <th>Slug</th>
+                  <th>Division</th>
                   <th>District</th>
                   <th class="text-center">Actions</th>
                 </tr>
@@ -33,7 +33,7 @@
                   <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $area->name }}</td>
-                    <td>{{ $area->slug }}</td>
+                    <td>{{ $area->division->name }}</td>
                     <td>{{ $area->district->name }}</td>
                     <td class="text-center">
                       <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.area.edit', $area->id) }}">

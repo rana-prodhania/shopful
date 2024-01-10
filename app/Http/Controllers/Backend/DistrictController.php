@@ -59,7 +59,7 @@ class DistrictController extends Controller
      */
     public function edit(string $id)
     {
-        $district = District::find($id);
+        $district = District::findOrFail($id);
         $divisions = Division::all();
         return view('admin.district.edit', compact('district', 'divisions'));
     }
@@ -73,7 +73,7 @@ class DistrictController extends Controller
             'name' => 'required',
             'division' => 'required',
         ]);
-        $district = District::find($id);
+        $district = District::findOrFail($id);
         $district->name = $request->name;
         $district->slug = Str::slug($request->name);
         $district->division_id = $request->division;
@@ -87,9 +87,14 @@ class DistrictController extends Controller
      */
     public function destroy(string $id)
     {
-        $district = district::find($id);
+        $district = District::findOrFail($id);
         $district->delete();
         toastr()->addSuccess('District deleted successfully');
         return to_route('admin.district.index');
+    }
+
+    public function getDistrict($division_id){
+        $districts = District::where('division_id', $division_id)->get();
+        return response()->json($districts);
     }
 }
