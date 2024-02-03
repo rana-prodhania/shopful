@@ -8,6 +8,7 @@ use App\Models\Division;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -38,26 +39,42 @@ class CheckoutController extends Controller
             'payment_method' => 'required',
         ]);
 
-        if($request->payment_method === 'cash') {
-            $cartTotal = Cart::total();
-            return view('frontend.checkout-cash', compact('cartTotal'));
+        
+        
+
+        // Create a new order
+        $order = new Order();
+        $order->user_id = Auth::user()->id;
+        $order->name = $request->name;
+        $order->email = $request->email;
+        $order->phone = $request->phone;
+        $order->address = $request->address;
+        $order->division_id = $request->division_id;
+        $order->district_id = $request->district_id;
+        $order->area_id = $request->area_id;
+        $order->notes = $request->notes;
+        $order->zip_code = $request->zip_code;
+        $order->payment_method = $request->payment_method;
+        $order->amount = Cart::total();
+        $order->invoice_no = random_int(100000, 999999);
+        $order->order_date = date('Y-m-d');
+        $order->status = 'pending';
+        $order->save();
+
+        // Create order details
+        foreach (Cart::content() as $cartItem) {
+            $orderItem = new OrderItem();
+            $orderItem->order_id = $order->id;
+            $orderItem->product_id = $cartItem->id;
+            $orderItem->price = $cartItem->price;
+            $orderItem->quantity = $cartItem->qty;
+            $orderItem->save();
         }
 
         
-        if (Cart::count() <= 0) {
-            toastr()->addWarning('Your cart is empty, please add some products');
-            return redirect()->back();
-        }
-
-        // Create a new order
-        // $order = new Order();
-        // $order->user_id = Auth::user()->id;
-        // $order->name = Auth::user()->name;
-        // $order->email = Auth::user()->email;
-        // $order->phone = Auth::user()->phone;
-
-        // $order->total = Cart::total();
-        // $order->save();
+        Cart::destroy();
+        return to_route('home');
+        
     }
 
     public function getDistrict($division_id){

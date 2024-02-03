@@ -66,7 +66,7 @@
               </div>
               <div class="form-group">
                 <label>Address <span>*</span></label>
-                <input type="text" id="address1" name="address" class="mb--15"
+                <input type="text" value="{{ auth()->user()->address }}" id="address" name="address" class="mb--15"
                   placeholder="House number and street name">
               </div>
               <div class="form-group">
@@ -196,76 +196,6 @@
   <!-- End Checkout Area  -->
 @endsection
 @push('page-js')
-  {{-- <script type="text/javascript">
-    $(document).ready(function() {
-      // Load District
-      const selectedDivision = $("#district").val();
-
-      if (selectedDivision) {
-        loadArea(selectedDivision);
-      }
-
-      $("#district").on("change", function() {
-        const district_id = $("#district").val();
-        console.log(district_id);
-        if (district_id) {
-          loadArea(district_id);
-        } else {
-          $("#area").empty();
-        }
-      });
-
-      function loadArea(district_id) {
-        $.ajax({
-          url: "{{ url('/area/ajax/') }}/" + district_id,
-          type: "GET",
-          success: function(data) {
-            $("#area").empty();
-            $.each(data, function(key, value) {
-              $("#area").append(
-                '<option  value="' +
-                value.id +
-                '">' +
-                value.name +
-                "</option>"
-              );
-            });
-          }
-        });
-      }
-
-      $("#division").on("change", function() {
-        const division_id = $("#division").val();
-        console.log(division_id);
-        if (division_id) {
-          loadDistrict(division_id);
-        } else {
-          $("#district").empty();
-        }
-      });
-
-      function loadDistrict(division_id) {
-        $.ajax({
-          url: "{{ url('/district/ajax/') }}/" + division_id,
-          type: "GET",
-          success: function(data) {
-            $("#district").empty();
-            $.each(data, function(key, value) {
-              $("#district").append(
-                '<option  value="' +
-                value.id +
-                '">' +
-                value.name +
-                "</option>"
-              );
-            });
-          }
-        });
-      }
-
-
-    })
-  </script> --}}
   <script type="text/javascript">
     $(document).ready(function() {
       // Load District
